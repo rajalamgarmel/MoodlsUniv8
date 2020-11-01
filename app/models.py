@@ -8,7 +8,12 @@ from app import db, login_manager
 
 @login_manager.user_loader
 def load_user(userid):
-    return Administrateur.query.get(int(userid))
+    user = Administrateur.query.get(int(userid))
+    if user == None:
+        user == Etudiant.query.get(int(userid))
+        if user == None:
+            user == Professeur.query.get(int(userid))
+    return user
 
 
 class Administrateur(UserMixin, db.Model):
