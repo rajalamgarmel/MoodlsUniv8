@@ -2,6 +2,7 @@
 
 # third-party imports
 from flask import Flask
+from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -21,18 +22,18 @@ def create_app(config_name):
 
     login_manager.init_app(app)
     login_manager.login_message = "You must be logged in to access this page."
-    login_manager.login_view = ""
+    login_manager.login_view = "etudiant.loginEtud"
 
 
-
+    Bootstrap(app)
     db.init_app(app)
 
     migrate = Migrate(app, db)
 
     from app import models
 
-    from .home import home as home_blueprint
-    app.register_blueprint(home_blueprint)
+    # from .admin import admin as admin_blueprint
+    # app.register_blueprint(admin_blueprint, url_prefix='/admin')
 
     from .etudiant import etudiant as etudiant_blueprint
     app.register_blueprint(etudiant_blueprint,url_prefix='/etudiant')
@@ -42,5 +43,29 @@ def create_app(config_name):
 
     from .administrateur import administrateur as administrateur_blueprint
     app.register_blueprint(administrateur_blueprint, url_prefix='/administrateur')
+
+    from app.administrateur.departement import departement as departement_blueprint
+    app.register_blueprint(departement_blueprint, url_prefix='/departement')
+
+    from app.administrateur.administrateurs import administrateurs as administrateurs_blueprint
+    app.register_blueprint(administrateurs_blueprint, url_prefix='/administrateurs')
+
+    from app.administrateur.formation import formations as formations_blueprint
+    app.register_blueprint(formations_blueprint, url_prefix='/formations')
+
+    from app.administrateur.professeur import professeurs as professeurs_blueprint
+    app.register_blueprint(professeurs_blueprint, url_prefix='/professeurs')
+
+    from app.administrateur.etudiant import etudiants as etudiants_blueprint
+    app.register_blueprint(etudiants_blueprint, url_prefix='/etudiants')
+
+    from app.administrateur.matiere import matieres as matieres_blueprint
+    app.register_blueprint(matieres_blueprint, url_prefix='/matieres')
+
+    from app.administrateur.annonce import annonces as annonces_blueprint
+    app.register_blueprint(annonces_blueprint, url_prefix='/annonces')
+
+    from .home import home as home_blueprint
+    app.register_blueprint(home_blueprint)
 
     return app
