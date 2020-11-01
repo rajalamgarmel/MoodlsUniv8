@@ -34,4 +34,13 @@ def create_app(config_name):
     from .home import home as home_blueprint
     app.register_blueprint(home_blueprint)
 
+    from .etudiant import etudiant as etudiant_blueprint
+    app.register_blueprint(etudiant_blueprint,url_prefix='/etudiant')
+
+    from .professeur import professeur as professeur_blueprint
+    app.register_blueprint(professeur_blueprint, url_prefix='/professeur')
+
+    from .administrateur import administrateur as administrateur_blueprint
+    app.register_blueprint(administrateur_blueprint, url_prefix='/administrateur')
+
     return app
