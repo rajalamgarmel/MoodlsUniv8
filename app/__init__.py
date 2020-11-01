@@ -18,8 +18,11 @@ def create_app(config_name):
 
     db.init_app(app)
 
+    # temporary route
+    @app.route('/')
+    def hello_world():
+        return 'Hello, World!'
 
-    from app import models
-
+    return app
 
     return app
