@@ -1,4 +1,4 @@
-# app/admin/views.py
+# app/formation/views.py
 
 from flask import flash, redirect, render_template, url_for, abort
 from flask_login import login_required, current_user
@@ -8,14 +8,14 @@ from ..forms import FormationForm
 from ...models import Formation
 
 
-# Department Views
+# Formation Views
 
 
 @formations.route('/departements', methods=['GET', 'POST'])
 @login_required
 def list_formations():
     """
-    List all departments
+    List all Formations
     """
 
     formations = Formation.query.all()
@@ -39,18 +39,18 @@ def add_formations():
                                description=form.description.data,
                                departement=form.departement.data)
         try:
-            # add department to the database
+            # add Formations to the database
             db.session.add(formations)
             db.session.commit()
             flash('You have successfully added a new formation.')
         except:
-            # in case department name already exists
+            # in case Formations name already exists
             flash('Error: formation name already exists.')
 
-        # redirect to departments page
+        # redirect to Formations page
         return redirect(url_for('formations.list_formations'))
 
-    # load department template
+    # load department Formations
     return render_template('administrateur/formations/formation.html', action="Add",
                            add_formations=add_formations, form=form,
                            title="Add Formation")
@@ -63,7 +63,7 @@ def edit_formations(id):
     Edit a formation
     """
 
-    add_departement = False
+    add_Formations = False
 
     formations = Formation.query.get_or_404(id)
     form = FormationForm(obj=formations)
@@ -74,7 +74,7 @@ def edit_formations(id):
         db.session.commit()
         flash('You have successfully edited the formation.')
 
-        # redirect to the departments page
+        # redirect to the Formations page
         return redirect(url_for('formations.list_formations'))
 
     form.description.data = formations.description
@@ -96,7 +96,7 @@ def delete_formations(id):
     db.session.commit()
     flash('You have successfully deleted the formation.')
 
-    # redirect to the departments page
+    # redirect to the Formation page
     return redirect(url_for('formations.list_formations'))
 
     return render_template(title="Delete Formation")

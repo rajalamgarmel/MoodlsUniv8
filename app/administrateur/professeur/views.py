@@ -1,4 +1,4 @@
-# app/admin/views.py
+# app/professeur/views.py
 
 from flask import flash, redirect, render_template, url_for, abort
 from flask_login import login_required, current_user
@@ -34,21 +34,20 @@ def add_professeurs():
                                  email=form.email.data,
                                  date_naissance=form.dateNaissance.data,
                                  password_hash=form.dateNaissance.data)
-        # administrateurs.departement = form.departement.data
 
         try:
-            # add department to the database
+            # add professeurs to the database
             db.session.add(professeurs)
             db.session.commit()
             flash('You have successfully added a new professeurs .')
         except:
-            # in case department name already exists
+            # in case professeurs name already exists
             flash('Error: professeurs name already exists.')
 
-        # redirect to departments page
+        # redirect to professeurs page
         return redirect(url_for('professeurs.list_professeurs'))
 
-    # load department template
+    # load professeurs template
     return render_template('administrateur/professeurs/professeur.html', action="Add",
                            add_professeurs=add_professeurs, form=form,
                            title="Add Professeurs")
@@ -74,7 +73,7 @@ def edit_professeurs(id):
         db.session.commit()
         flash('You have successfully edited the professeurs.')
 
-        # redirect to the departments page
+        # redirect to the professeurs page
         return redirect(url_for('professeurs.list_professeurs'))
 
     form.nom.data = professeurs.nom_prof
@@ -99,7 +98,7 @@ def delete_professeurs(id):
     db.session.commit()
     flash('You have successfully deleted the professeurs.')
 
-    # redirect to the departments page
+    # redirect to the professeurs page
     return redirect(url_for('professeurs.list_professeurs'))
 
     return render_template(title="Delete professeurs")

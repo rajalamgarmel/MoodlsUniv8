@@ -1,4 +1,4 @@
-# app/home/__init__.py
+# app/formation/__init__.py
 
 from flask import Blueprint
 

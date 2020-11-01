@@ -1,4 +1,4 @@
-# app/auth/views.py
+# app/etudiant/views.py
 
 from flask import flash, redirect, render_template, url_for
 from flask_login import login_required, login_user, logout_user
@@ -13,19 +13,17 @@ from ..models import Etudiant
 def loginEtud():
     """
     Handle requests to the /login route
-    Log an employee in through the login form
+    Log an etudiant in through the login form
     """
     form = LoginForm()
     if form.validate_on_submit():
 
-        # check whether employee exists in the database and whether
+        # check whether etudiant exists in the database and whether
         # the password entered matches the password in the database
         etudiant = Etudiant.query.filter_by(email=form.email.data).first()
         if etudiant is not None and Etudiant.query.filter_by(password_hash=form.password.data).first():
-            # log employee in
-            # log employee in
+            # log etudiant in
             login_user(etudiant)
-
 
             return redirect(url_for('etudiant.AccueilEtud'))
 
@@ -42,7 +40,7 @@ def loginEtud():
 def logoutEtud():
     """
     Handle requests to the /logout route
-    Log an employee out through the logout link
+    Log an etudiant out through the logout link
     """
     logout_user()
     flash('You have successfully been logged out.')
@@ -55,6 +53,6 @@ def logoutEtud():
 @login_required
 def AccueilEtud():
     """
-    Render the dashboard template on the /dashboard route
+    Render the dashboard template on the /AccueilEtud route
     """
-    return render_template('etudiant/AccueilEtud.html', title="Dashboard")
+    return render_template('etudiant/AccueilEtud.html', title="Accueil Etudiant")

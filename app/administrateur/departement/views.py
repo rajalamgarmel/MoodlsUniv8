@@ -15,7 +15,7 @@ def check_admin():
         abort(403)
 
 
-# Department Views
+# Departement Views
 
 
 @departement.route('/departements', methods=['GET', 'POST'])

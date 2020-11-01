@@ -1,4 +1,4 @@
-# app/admin/views.py
+# app/etudiant/views.py
 
 from flask import flash, redirect, render_template, url_for, abort
 from flask_login import login_required, current_user
@@ -36,21 +36,20 @@ def add_etudiants(id):
                                  date_naissance=form.dateNaissance.data,
                                  password_hash=form.dateNaissance.data,
                                  formation_id=id)
-        # administrateurs.departement = form.departement.data
 
         try:
-            # add department to the database
+            # add etudiant to the database
             db.session.add(etudiants)
             db.session.commit()
             flash('You have successfully added a new etudiants .')
         except:
-            # in case department name already exists
+            # in case etudiant name already exists
             flash('Error: etudiants name already exists.')
 
-        # redirect to departments page
+        # redirect to etudiant page
         return redirect(url_for('etudiants.list_etudiants', id=etudiants.formation_id))
 
-    # load department template
+    # load etudiant template
     return render_template('administrateur/etudiant/etudiant.html', action="Add",
                            add_etudiants=add_etudiants, form=form,
                            title="Add Etudiants")
@@ -77,7 +76,7 @@ def edit_etudiants(id):
         db.session.commit()
         flash('You have successfully edited the etudiants.')
 
-        # redirect to the departments page
+        # redirect to the etudiant page
         return redirect(url_for('etudiants.list_etudiants', id=etudiants.formation_id))
 
     form.nom.data = etudiants.nom_etud

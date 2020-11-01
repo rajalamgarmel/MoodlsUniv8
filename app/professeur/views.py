@@ -10,22 +10,16 @@ from ..models import Professeur
 def loginProf():
     """
     Handle requests to the /login route
-    Log an employee in through the login form
+    Log an professeur in through the login form
     """
     formprof = LoginForm()
     if formprof.validate_on_submit():
 
-        # check whether employee exists in the database and whether
+        # check whether professeur exists in the database and whether
         # the password entered matches the password in the database
         professeur = Professeur.query.filter_by(email=formprof.email.data).first()
         if professeur is not None and Professeur.query.filter_by(password_hash=formprof.password.data).first():
-            # log employee in
-            # log employee in
             login_user(professeur)
-
-            @login_manager.user_loader
-            def load_user(id):
-                return Professeur.query.get(int(id))
 
             return redirect(url_for('professeur.AcceuilProfesseur'))
 
@@ -42,7 +36,7 @@ def loginProf():
 def logoutProf():
     """
     Handle requests to the /logout route
-    Log an employee out through the logout link
+    Log an professeur out through the logout link
     """
     logout_user()
     flash('You have successfully been logged out.')
@@ -55,6 +49,6 @@ def logoutProf():
 @login_required
 def AcceuilProfesseur():
     """
-    Render the dashboard template on the /dashboard route
+    Render the dashboard template on the /AcceuilProfesseur route
     """
-    return render_template('professeur/AccueilProf.html', title="Dashboard")
+    return render_template('professeur/AccueilProf.html', title="Accueil Professeur")

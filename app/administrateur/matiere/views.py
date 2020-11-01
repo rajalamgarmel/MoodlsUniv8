@@ -1,4 +1,4 @@
-# app/admin/views.py
+# app/matiere/views.py
 
 from flask import flash, redirect, render_template, url_for, abort
 from flask_login import login_required, current_user

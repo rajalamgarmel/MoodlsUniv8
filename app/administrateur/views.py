@@ -1,4 +1,4 @@
-# app/auth/views.py
+# app/administrateur/views.py
 
 from flask import flash, redirect, render_template, url_for, abort
 from flask_login import login_required, login_user, logout_user, current_user
@@ -12,20 +12,21 @@ from ..models import Administrateur
 def loginAdmin():
     """
     Handle requests to the /login route
-    Log an employee in through the login form
+    Log an Admin in through the login form
     """
     form = LoginForm()
     if form.validate_on_submit():
 
-        # check whether employee exists in the database and whether
+        # check whether admin exists in the database and whether
         # the password entered matches the password in the database
         administrateur = Administrateur.query.filter_by(email=form.email.data, password_hash=form.password.data).first()
         if administrateur is not None:
-            # log employee in
+            # log admin in
             login_user(administrateur)
             db.session.commit()
 
             # redirect to the dashboard page after login
+            # superadmin can add a simple admin
             if administrateur.is_superadmin:
                 return redirect(url_for('administrateur.AccueilSuperAdm'))
             else:
@@ -44,7 +45,7 @@ def loginAdmin():
 def logoutAdmin():
     """
     Handle requests to the /logout route
-    Log an employee out through the logout link
+    Log an admin out through the logout link
     """
     logout_user()
     flash('You have successfully been logged out.')
@@ -57,19 +58,19 @@ def logoutAdmin():
 @login_required
 def AccueilSuperAdm():
     """
-    Render the dashboard template on the /dashboard route
+    Render the dashboard template on the /AccueilSuperAdm route
     """
     # prevent non-admins from accessing the page
     if not current_user.is_superadmin:
         abort(403)
 
-    return render_template('administrateur/AccueilSuperAdm.html', title="Dashboard")
+    return render_template('administrateur/AccueilSuperAdm.html', title="Accueil Super Administrateur")
 
 
 @administrateur.route('/AccueilAdmin')
 @login_required
 def AccueilAdmin():
     """
-    Render the dashboard template on the /dashboard route
+    Render the dashboard template on the /AccueilAdmin route
     """
-    return render_template('administrateur/AccueilAdmin.html', title="Dashboard")
+    return render_template('administrateur/AccueilAdmin.html', title="Accueil Administrateur")

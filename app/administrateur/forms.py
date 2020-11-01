@@ -1,4 +1,4 @@
-# app/etudiant/forms.py
+# app/administrateur/forms.py
 
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField, SubmitField, ValidationError, RadioField, TextAreaField,BooleanField,SelectField
@@ -19,7 +19,7 @@ class LoginForm(FlaskForm):
 
 class DepartementForm(FlaskForm):
     """
-    Form for admin to add or edit a department
+    Form for SuperAdmin to add or edit a department
     """
     label = StringField('Label Departement', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired()])
@@ -28,7 +28,7 @@ class DepartementForm(FlaskForm):
 
 class AdminForm(FlaskForm):
     """
-    Form for users to create new account
+    Form for SuperAdmin to create new account
     """
     nom = StringField('Nom', validators=[DataRequired()])
     prenom = StringField('Prenom', validators=[DataRequired()])
@@ -42,7 +42,7 @@ class AdminForm(FlaskForm):
 
 class FormationForm(FlaskForm):
     """
-    Form for formation to create new formation
+    Form for Admin to create new formation
     """
     label_formation = StringField('Label Formation', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired()])
@@ -53,7 +53,7 @@ class FormationForm(FlaskForm):
 
 class ProfForm(FlaskForm):
     """
-    Form for users to create new account
+    Form for Admin to create new Professeur
     """
     nom = StringField('Nom', validators=[DataRequired()])
     prenom = StringField('Prenom', validators=[DataRequired()])
@@ -65,7 +65,7 @@ class ProfForm(FlaskForm):
 
 class EtudForm(FlaskForm):
     """
-    Form for users to create new account
+    Form for Admin to create new Etudiant
     """
     nom = StringField('Nom', validators=[DataRequired()])
     prenom = StringField('Prenom', validators=[DataRequired()])
@@ -77,7 +77,7 @@ class EtudForm(FlaskForm):
 
 class MatiereForm(FlaskForm):
     """
-    Form for matiere to create new formation
+    Form for Admin to create new Matière
     """
     label_matiere = StringField('Label Formation', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired()])
@@ -87,7 +87,7 @@ class MatiereForm(FlaskForm):
 
 class AnnonceForm(FlaskForm):
     """
-    Form for Annonce to create new Annonce
+    Form for Admin to create new Annonce
     """
     titre = StringField('titre', validators=[DataRequired()])
     contenu = TextAreaField('contenu')

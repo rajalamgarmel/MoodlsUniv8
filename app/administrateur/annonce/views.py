@@ -48,7 +48,7 @@ def add_annonces(id):
         # redirect to annonces page
         return redirect(url_for('annonces.list_annonces', id=annonces.formation_id))
 
-    # load department template
+    # load annonces template
     return render_template('administrateur/annonce/annonce.html', action="Add",
                            add_annonces=add_annonces, form=form,
                            title="Add Annonces")

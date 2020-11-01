@@ -9,8 +9,6 @@
                 <li><a href="{{ url_for('administrateur.AccueilAdmin')}}">Accueil</a></li>
                 <li><a href="{{ url_for('formations.list_formations')}}">Formations</a></li>
                 <li><a href="{{ url_for('professeurs.list_professeurs')}}">Professeurs</a></li>
-                <li><a href="">Etudiants</a></li>
-                <li><a href="">Announces</a></li>
                 <li><a href="{{ url_for('administrateur.logoutAdmin')}}">Logout</a></li>
                 <li><a><i class="fa fa-user"></i>  Bonjour, {{ current_user.nom_admin }}</a></li>
                 {% endif %}
@@ -67,7 +65,7 @@
           <div style="text-align: center">
         {% else %}
           <div style="text-align: center">
-            <h3> No Administrateurs have been added. </h3>
+            <h3> No Professeur have been added. </h3>
             <hr class="intro-divider">
         {% endif %}
           <a href="{{ url_for('professeurs.add_professeurs') }}" class="btn btn-default btn-lg">
