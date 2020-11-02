@@ -6,7 +6,7 @@
                 {% if current_user.is_authenticated %}
               <li><a href="{{url_for('professeur.AcceuilProfesseur')}}">Dashboard</a></li>
               <li><a href="{{url_for('professeur.logoutProf')}}">Logout</a></li>
-              <li><a><i class="fa fa-user"></i>  Bonjour, {{ current_user.username }}!</a></li>
+              <li><a><i class="fa fa-user"></i>  Bonjour, {{ current_user.nom_prof }} {{ current_user.prenom_prof }}</a></li>
                  {% endif %}
             </ul>
         </div>
