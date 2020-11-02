@@ -7,13 +7,20 @@ from app import db, login_manager
 
 
 @login_manager.user_loader
-def load_user(userid):
-    user = Administrateur.query.get(int(userid))
-    if user == None:
-        user == Etudiant.query.get(int(userid))
-        if user == None:
-            user == Professeur.query.get(int(userid))
-    return user
+def load_user(user_id):
+    temp = user_id.split('.')
+    try:
+        uid = temp[1]
+        if temp[0] == 'administrateur':
+            return Administrateur.query.get(uid)
+        elif temp[0] == 'etudiant':
+            return Etudiant.query.get(uid)
+        elif temp[0] == 'professeur':
+            return Professeur.query.get(uid)
+        else:
+            return None
+    except IndexError:
+        return None
 
 
 class Administrateur(UserMixin, db.Model):
@@ -54,6 +61,9 @@ class Administrateur(UserMixin, db.Model):
         Check if hashed password matches actual password
         """
         return check_password_hash(self.password_hash, password)
+
+    def get_id(self):
+        return 'administrateur.' + str(self.id)
 
     def __repr__(self):
         return '<Administrateur: {}>'.format(self.nom_admin)
@@ -101,6 +111,9 @@ class Etudiant(UserMixin, db.Model):
     def __repr__(self):
         return '<Etudiant: {}>'.format(self.nom_etud)
 
+    def get_id(self):
+        return 'etudiant.' + str(self.id)
+
 
 class Professeur(UserMixin, db.Model):
     """
@@ -119,8 +132,7 @@ class Professeur(UserMixin, db.Model):
     email = db.Column(db.String(60), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     matiere = db.relationship('Matiere', backref='professeur',
-                            lazy='dynamic')
-
+                              lazy='dynamic')
 
     @property
     def password(self):
@@ -142,8 +154,12 @@ class Professeur(UserMixin, db.Model):
         """
         return check_password_hash(self.password_hash, password)
 
+    def get_id(self):
+        return 'professeur.' + str(self.id)
+
     def __repr__(self):
-        return '<professeur: {}>'.format(self.nom_prof,self.prenom_prof)
+        return '<professeur: {}>'.format(self.nom_prof, self.prenom_prof)
+
 
 class Announce(db.Model):
     """

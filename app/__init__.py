@@ -22,7 +22,12 @@ def create_app(config_name):
 
     login_manager.init_app(app)
     login_manager.login_message = "You must be logged in to access this page."
-    login_manager.login_view = "etudiant.loginEtud"
+    #login_manager.login_view = "etudiant.loginEtud"
+    login_manager.blueprint_login_views = {
+        'etudiant': "etudiant.loginEtud",
+        'administrateur': "administrateur.loginAdmin",
+        'professeur': "professeur.loginProf",
+    }
 
 
     Bootstrap(app)
