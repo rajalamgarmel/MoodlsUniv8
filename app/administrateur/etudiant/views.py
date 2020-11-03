@@ -28,7 +28,8 @@ def add_etudiants(id):
 
     form = EtudForm()
     if form.validate_on_submit():
-        etudiants = Etudiant(nom_etud=form.nom.data,
+        etudiants = Etudiant(type='etud',
+                             nom_etud=form.nom.data,
                                  prenom_etud=form.prenom.data,
                                  num_etud=form.numero_etud.data,
                                  sexe_etud=form.sexe.data,
@@ -73,6 +74,10 @@ def edit_etudiants(id):
         etudiants.date_naissance = form.dateNaissance.data
         etudiants.email = form.email.data
         etudiants.sexe_etud = form.sexe.data
+        etudiants.adresse = form.adresse.data
+        etudiants.code_postal = form.code_postal.data
+        etudiants.ville = form.ville.data
+        etudiants.pays = form.pays.data
         db.session.commit()
         flash('You have successfully edited the etudiants.')
 
@@ -85,6 +90,10 @@ def edit_etudiants(id):
     form.email.data = etudiants.email
     form.numero_etud.data = etudiants.num_etud
     form.sexe.data = etudiants.sexe_etud
+    form.code_postal.data = etudiants.code_postal
+    form.adresse.data = etudiants.adresse
+    form.ville.data = etudiants.ville
+    form.pays.data = etudiants.pays
     return render_template('administrateur/etudiant/etudiant.html', action="Edit",
                            add_etudiants=add_etudiants, form=form,
                            etudiants=etudiants, title="Edit Etudiants")

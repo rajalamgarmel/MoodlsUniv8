@@ -33,12 +33,17 @@ class Administrateur(UserMixin, db.Model):
     __tablename__ = 'administrateur'
 
     id = db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.String(60))
     nom_admin = db.Column(db.String(60), index=True)
     prenom_admin = db.Column(db.String(60), index=True)
     sexe_admin = db.Column(db.String(60), index=True)
     date_naissance = db.Column(db.Date(), index=True)
     email = db.Column(db.String(60), index=True, unique=True)
     password_hash = db.Column(db.String(128))
+    adresse = db.Column(db.String(60))
+    code_postal = db.Column(db.Integer)
+    ville = db.Column(db.String(60))
+    pays = db.Column(db.String(60))
     departement_id = db.Column(db.Integer, db.ForeignKey('departement.id'))
     is_superadmin = db.Column(db.Boolean, default=False)
 
@@ -79,6 +84,7 @@ class Etudiant(UserMixin, db.Model):
     __tablename__ = 'etudiant'
 
     id = db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.String(60))
     nom_etud = db.Column(db.String(60), index=True)
     prenom_etud = db.Column(db.String(60), index=True)
     num_etud = db.Column(db.String(60), index=True)
@@ -86,6 +92,10 @@ class Etudiant(UserMixin, db.Model):
     date_naissance = db.Column(db.Date(), index=True)
     email = db.Column(db.String(60), index=True, unique=True)
     password_hash = db.Column(db.String(128))
+    adresse = db.Column(db.String(60))
+    code_postal = db.Column(db.Integer)
+    ville = db.Column(db.String(60))
+    pays = db.Column(db.String(60))
     formation_id = db.Column(db.Integer, db.ForeignKey('formation.id'))
 
     @property
@@ -125,12 +135,17 @@ class Professeur(UserMixin, db.Model):
     __tablename__ = 'professeur'
 
     id = db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.String(60))
     nom_prof = db.Column(db.String(60), index=True)
     prenom_prof = db.Column(db.String(60), index=True)
     sexe_prof = db.Column(db.String(60), index=True)
     date_naissance = db.Column(db.Date(), index=True)
     email = db.Column(db.String(60), index=True, unique=True)
     password_hash = db.Column(db.String(128))
+    adresse = db.Column(db.String(60))
+    code_postal = db.Column(db.Integer)
+    ville = db.Column(db.String(60))
+    pays = db.Column(db.String(60))
     matiere = db.relationship('Matiere', backref='professeur',
                               lazy='dynamic')
 

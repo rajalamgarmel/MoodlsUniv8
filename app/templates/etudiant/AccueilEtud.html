@@ -1,16 +1,5 @@
 {% extends "base.html" %}
 {% block title %}Dashboard{% endblock %}
-{% block menu %}
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                {% if current_user.is_authenticated %}
-              <li><a href="{{url_for('etudiant.AccueilEtud')}}">Accueil</a></li>
-              <li><a href="{{url_for('etudiant.logoutEtud')}}">Logout</a></li>
-              <li><a><i class="fa fa-user"></i>  Bonjour, {{ current_user.nom_etud }} {{ current_user.prenom_etud }}</a></li>
-                 {% endif %}
-            </ul>
-        </div>
-{% endblock %}
 {% block body %}
 <div class="intro-header">
     <div class="container">

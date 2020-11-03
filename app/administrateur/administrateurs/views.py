@@ -40,28 +40,32 @@ def add_administrateurs():
 
     form = AdminForm()
     if form.validate_on_submit():
-        administrateurs = Administrateur(nom_admin=form.nom.data,
+        administrateurs = Administrateur(type='admin',
+                                         nom_admin=form.nom.data,
                                          prenom_admin=form.prenom.data,
                                          sexe_admin=form.sexe.data,
                                          email=form.email.data,
                                          date_naissance=form.dateNaissance.data,
                                          password_hash=form.dateNaissance.data,
+                                         adresse=form.adresse.data,
+                                         code_postal=form.code_postal.data,
+                                         ville=form.ville.data,
+                                         pays=form.pays.data,
                                          departement=form.departement.data)
-        #administrateurs.departement = form.departement.data
 
         try:
-            # add department to the database
+            # add administrateur to the database
             db.session.add(administrateurs)
             db.session.commit()
             flash('You have successfully added a new administrateur .')
         except:
-            # in case department name already exists
+            # in case administrateur name already exists
             flash('Error: administrateur name already exists.')
 
-        # redirect to departments page
+        # redirect to administrateur page
         return redirect(url_for('administrateurs.list_administrateurs'))
 
-    # load department template
+    # load administrateur template
     return render_template('administrateur/administrateurs/administrateur.html', action="Add",
                            add_administrateurs=add_administrateurs, form=form,
                            title="Add Administrateur")
@@ -85,11 +89,15 @@ def edit_administrateurs(id):
         administrateurs.date_naissance = form.dateNaissance.data
         administrateurs.email = form.email.data
         administrateurs.sexe_admin = form.sexe.data
+        administrateurs.adresse = form.adresse.data
+        administrateurs.code_postal = form.code_postal.data
+        administrateurs.ville = form.ville.data
+        administrateurs.pays = form.pays.data
         administrateurs.departement = form.departement.data
         db.session.commit()
         flash('You have successfully edited the administrateurs.')
 
-        # redirect to the departments page
+        # redirect to the administrateur page
         return redirect(url_for('administrateurs.list_administrateurs'))
 
     form.nom.data = administrateurs.nom_admin
@@ -97,6 +105,10 @@ def edit_administrateurs(id):
     form.dateNaissance.data = administrateurs.date_naissance
     form.email.data = administrateurs.email
     form.sexe.data = administrateurs.sexe_admin
+    form.code_postal.data = administrateurs.code_postal
+    form.adresse.data = administrateurs.adresse
+    form.ville.data = administrateurs.ville
+    form.pays.data = administrateurs.pays
     form.departement.data = administrateurs.departement
     return render_template('administrateur/administrateurs/administrateur.html', action="Edit",
                            add_departement=add_administrateurs, form=form,

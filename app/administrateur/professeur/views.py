@@ -28,7 +28,8 @@ def add_professeurs():
 
     form = ProfForm()
     if form.validate_on_submit():
-        professeurs = Professeur(nom_prof=form.nom.data,
+        professeurs = Professeur(type='prof',
+                                 nom_prof=form.nom.data,
                                  prenom_prof=form.prenom.data,
                                  sexe_prof=form.sexe.data,
                                  email=form.email.data,
@@ -70,6 +71,10 @@ def edit_professeurs(id):
         professeurs.date_naissance = form.dateNaissance.data
         professeurs.email = form.email.data
         professeurs.sexe_prof = form.sexe.data
+        professeurs.adresse = form.adresse.data
+        professeurs.code_postal = form.code_postal.data
+        professeurs.ville = form.ville.data
+        professeurs.pays = form.pays.data
         db.session.commit()
         flash('You have successfully edited the professeurs.')
 
@@ -81,6 +86,10 @@ def edit_professeurs(id):
     form.dateNaissance.data = professeurs.date_naissance
     form.email.data = professeurs.email
     form.sexe.data = professeurs.sexe_prof
+    form.code_postal.data = professeurs.code_postal
+    form.adresse.data = professeurs.adresse
+    form.ville.data = professeurs.ville
+    form.pays.data = professeurs.pays
     return render_template('administrateur/professeurs/professeur.html', action="Edit",
                            add_professeurs=add_professeurs, form=form,
                            professeurs=professeurs, title="Edit professeurs")
