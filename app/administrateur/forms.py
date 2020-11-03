@@ -35,6 +35,10 @@ class AdminForm(FlaskForm):
     sexe = RadioField('Sexe', choices=[('M', 'M'), ('F', 'F')])
     dateNaissance = StringField('Date Naissance', validators=[DataRequired()])
     email = StringField('email', validators=[DataRequired(), Email()])
+    adresse = StringField('adresse', validators=[DataRequired()])
+    code_postal = StringField('Code Postal', validators=[DataRequired()])
+    ville = StringField('Ville', validators=[DataRequired()])
+    pays = StringField('Pays', validators=[DataRequired()])
     departement = QuerySelectField(query_factory=lambda: Departement.query.all(),
                                    get_label="label_departement")
     submit = SubmitField('Register')
@@ -60,6 +64,10 @@ class ProfForm(FlaskForm):
     sexe = RadioField('Sexe', choices=[('M', 'M'), ('F', 'F')])
     dateNaissance = StringField('Date Naissance', validators=[DataRequired()])
     email = StringField('email', validators=[DataRequired(), Email()])
+    adresse = StringField('adresse', validators=[DataRequired()])
+    code_postal = StringField('Code Postal', validators=[DataRequired()])
+    ville = StringField('Ville', validators=[DataRequired()])
+    pays = StringField('Pays', validators=[DataRequired()])
     submit = SubmitField('Register')
 
 
@@ -73,6 +81,10 @@ class EtudForm(FlaskForm):
     sexe = RadioField('Sexe', choices=[('M', 'M'), ('F', 'F')])
     dateNaissance = StringField('Date Naissance', validators=[DataRequired()])
     email = StringField('email', validators=[DataRequired(), Email()])
+    adresse = StringField('adresse', validators=[DataRequired()])
+    code_postal = StringField('Code Postal', validators=[DataRequired()])
+    ville = StringField('Ville', validators=[DataRequired()])
+    pays = StringField('Pays', validators=[DataRequired()])
     submit = SubmitField('Register')
 
 class MatiereForm(FlaskForm):

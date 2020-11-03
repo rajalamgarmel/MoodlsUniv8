@@ -74,3 +74,18 @@ def AccueilAdmin():
     Render the dashboard template on the /AccueilAdmin route
     """
     return render_template('administrateur/AccueilAdmin.html', title="Accueil Administrateur")
+
+@administrateur.route('/Profil')
+@login_required
+def profil():
+    """
+    Render the dashboard template on the /Profil route
+    """
+    """
+     Profil
+     """
+
+    administrateur = Administrateur.query.filter_by(id=current_user.id)
+
+    return render_template('administrateur/profil.html',
+                           administrateur=administrateur, title="Profil")
