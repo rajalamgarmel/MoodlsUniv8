@@ -32,6 +32,11 @@ CREATE TABLE `administrateur` (
   `email` varchar(60) DEFAULT NULL,
   `is_superadmin` tinyint(1) DEFAULT NULL,
   `password_hash` varchar(128) DEFAULT NULL,
+  `adresse` varchar(60) DEFAULT NULL,
+  `code_postal` int(11) DEFAULT NULL,
+  `pays` varchar(60) DEFAULT NULL,
+  `ville` varchar(60) DEFAULT NULL,
+  `type` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ix_administrateur_email` (`email`),
   KEY `departement_id` (`departement_id`),
@@ -49,7 +54,7 @@ CREATE TABLE `administrateur` (
 
 LOCK TABLES `administrateur` WRITE;
 /*!40000 ALTER TABLE `administrateur` DISABLE KEYS */;
-INSERT INTO `administrateur` VALUES (1,'admin','admin','F',1,'1989-10-10','admin@gmail.com',0,'admin'),(2,'superadmin','superadmin','F',6,'1989-10-09','superadmin@gmail.com',1,'superadmin'),(3,'raja','lamgarmel','F',1,'1999-10-10','raja@gmail.com',0,'raja');
+INSERT INTO `administrateur` VALUES (1,'admin','admin','F',1,'1989-10-10','admin@gmail.com',0,'admin','9 rue pierre legrand',75013,'FRANCE','PARIS','admin'),(2,'superadmin','superadmin','F',6,'1989-10-09','superadmin@gmail.com',1,'superadmin',NULL,NULL,NULL,NULL,'admin'),(3,'raja','lamgarmel','F',1,'1999-10-10','raja@gmail.com',0,'raja',NULL,NULL,NULL,NULL,'admin');
 /*!40000 ALTER TABLE `administrateur` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -72,7 +77,7 @@ CREATE TABLE `alembic_version` (
 
 LOCK TABLES `alembic_version` WRITE;
 /*!40000 ALTER TABLE `alembic_version` DISABLE KEYS */;
-INSERT INTO `alembic_version` VALUES ('8af7a7692973');
+INSERT INTO `alembic_version` VALUES ('4a4d3bdfd295');
 /*!40000 ALTER TABLE `alembic_version` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -181,6 +186,11 @@ CREATE TABLE `etudiant` (
   `email` varchar(60) DEFAULT NULL,
   `num_etud` varchar(60) DEFAULT NULL,
   `password_hash` varchar(128) DEFAULT NULL,
+  `adresse` varchar(60) DEFAULT NULL,
+  `code_postal` int(11) DEFAULT NULL,
+  `pays` varchar(60) DEFAULT NULL,
+  `ville` varchar(60) DEFAULT NULL,
+  `type` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ix_etudiant_email` (`email`),
   KEY `formation_id` (`formation_id`),
@@ -190,7 +200,7 @@ CREATE TABLE `etudiant` (
   KEY `ix_etudiant_date_naissance` (`date_naissance`),
   KEY `ix_etudiant_num_etud` (`num_etud`),
   CONSTRAINT `etudiant_ibfk_1` FOREIGN KEY (`formation_id`) REFERENCES `formation` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -199,7 +209,7 @@ CREATE TABLE `etudiant` (
 
 LOCK TABLES `etudiant` WRITE;
 /*!40000 ALTER TABLE `etudiant` DISABLE KEYS */;
-INSERT INTO `etudiant` VALUES (1,'etudiant','etudiant','M',1,'1994-04-12','etudiant@gmail.com','9999998','etudiant'),(2,'etudiant1','etudiant1','F',1,'1994-04-12','etudiant1@gmail.com','999999999','etudiant1');
+INSERT INTO `etudiant` VALUES (1,'etudiant','etudiant','M',1,'1994-04-12','etudiant@gmail.com','9999998','etudiant',NULL,NULL,NULL,NULL,'etud'),(2,'etudiant1','etudiant1','F',1,'1994-04-12','etudiant1@gmail.com','999999999','etudiant1',NULL,NULL,NULL,NULL,'etud');
 /*!40000 ALTER TABLE `etudiant` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -251,7 +261,7 @@ CREATE TABLE `matiere` (
   KEY `professeur_id` (`professeur_id`),
   CONSTRAINT `matiere_ibfk_1` FOREIGN KEY (`formation_id`) REFERENCES `formation` (`id`),
   CONSTRAINT `matiere_ibfk_2` FOREIGN KEY (`professeur_id`) REFERENCES `professeur` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -260,7 +270,7 @@ CREATE TABLE `matiere` (
 
 LOCK TABLES `matiere` WRITE;
 /*!40000 ALTER TABLE `matiere` DISABLE KEYS */;
-INSERT INTO `matiere` VALUES (1,'Outils Libre','module outils libre',1,5),(2,'Programmation','Programmation',1,3);
+INSERT INTO `matiere` VALUES (1,'Outils Libre','module outils libre',1,NULL),(2,'Programmation','Programmation',1,3);
 /*!40000 ALTER TABLE `matiere` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -279,13 +289,18 @@ CREATE TABLE `professeur` (
   `date_naissance` date DEFAULT NULL,
   `email` varchar(60) DEFAULT NULL,
   `password_hash` varchar(128) DEFAULT NULL,
+  `adresse` varchar(60) DEFAULT NULL,
+  `code_postal` int(11) DEFAULT NULL,
+  `pays` varchar(60) DEFAULT NULL,
+  `ville` varchar(60) DEFAULT NULL,
+  `type` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ix_professeur_email` (`email`),
   KEY `ix_professeur_nom_prof` (`nom_prof`),
   KEY `ix_professeur_prenom_prof` (`prenom_prof`),
   KEY `ix_professeur_sexe_prof` (`sexe_prof`),
   KEY `ix_professeur_date_naissance` (`date_naissance`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -294,7 +309,7 @@ CREATE TABLE `professeur` (
 
 LOCK TABLES `professeur` WRITE;
 /*!40000 ALTER TABLE `professeur` DISABLE KEYS */;
-INSERT INTO `professeur` VALUES (3,'prodesseur','professeur','M','1981-09-06','professeur@gmail.com','professeur'),(4,'professeur2','professeur2','M','1981-09-06','professeur2@gmail.com','professeur2'),(5,'FND','Jack','M','1989-10-09','jack@gmail.com','1989-10-09');
+INSERT INTO `professeur` VALUES (3,'prodesseur','professeur','M','1981-09-06','professeur@gmail.com','professeur','9 rue prince',75000,'FRANCE','PARIS','prof'),(4,'professeur2','professeur2','M','1981-09-06','professeur2@gmail.com','professeur2','19 rue pierre',94800,'FRANCE','VILLEJUIF','prof');
 /*!40000 ALTER TABLE `professeur` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -307,4 +322,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-01 19:32:56
+-- Dump completed on 2020-11-03 15:57:23
