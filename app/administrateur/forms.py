@@ -104,3 +104,18 @@ class AnnonceForm(FlaskForm):
     titre = StringField('titre', validators=[DataRequired()])
     contenu = TextAreaField('contenu')
     submit = SubmitField('Register')
+
+class ProfilForm(FlaskForm):
+    """
+    Form to edit a profile
+    """
+    nom = StringField('Nom',  render_kw={'readonly': True})
+    prenom = StringField('Prenom', render_kw={'readonly': True})
+    dateNaissance = StringField('Date Naissance', render_kw={'readonly': True})
+    email = StringField('email', render_kw={'readonly': True})
+    adresse = StringField('adresse', validators=[DataRequired()])
+    code_postal = StringField('Code Postal', validators=[DataRequired()])
+    ville = StringField('Ville', validators=[DataRequired()])
+    pays = StringField('Pays', validators=[DataRequired()])
+
+    submit = SubmitField('Register')
