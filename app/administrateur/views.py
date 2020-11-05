@@ -4,7 +4,7 @@ from flask import flash, redirect, render_template, url_for, abort
 from flask_login import login_required, login_user, logout_user, current_user
 from app.administrateur import administrateur
 from .. import db
-from .forms import LoginForm
+from .forms import LoginForm, ProfilForm
 from ..models import Administrateur
 
 
@@ -75,11 +75,12 @@ def AccueilAdmin():
     """
     return render_template('administrateur/AccueilAdmin.html', title="Accueil Administrateur")
 
-@administrateur.route('/Profil')
+
+@administrateur.route('/profile')
 @login_required
 def profil():
     """
-    Render the dashboard template on the /Profil route
+    Render the dashboard template on the /Profile route
     """
     """
      Profil
@@ -87,5 +88,39 @@ def profil():
 
     administrateur = Administrateur.query.filter_by(id=current_user.id)
 
-    return render_template('administrateur/profil.html',
-                           administrateur=administrateur, title="Profil")
+    return render_template('administrateur/profile/profile.html',
+                           administrateur=administrateur, title="profile")
+
+
+@administrateur.route('/profile/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_profile(id):
+    """
+    Render the edit template on the /Profile route
+    """
+    """
+     Profil
+     """
+
+    administrateur = Administrateur.query.get_or_404(id)
+    form = ProfilForm(obj=administrateur)
+    if form.validate_on_submit():
+        administrateur.adresse = form.adresse.data
+        administrateur.code_postal = form.code_postal.data
+        administrateur.ville = form.ville.data
+        administrateur.pays = form.pays.data
+        db.session.commit()
+        flash('You have successfully edited your profile.')
+
+        # redirect to the profile page
+        return redirect(url_for('administrateur.profil'))
+
+    form.nom.data = administrateur.nom_admin
+    form.prenom.data = administrateur.prenom_admin
+    form.dateNaissance.data = administrateur.date_naissance
+    form.adresse.data = administrateur.adresse
+    form.code_postal.data = administrateur.code_postal
+    form.ville.data = administrateur.ville
+    form.pays.data = administrateur.pays
+    return render_template('administrateur/profile/edit_profile.html', action="Edit", form=form,
+                           administrateur=administrateur, title="Edit Profile")
