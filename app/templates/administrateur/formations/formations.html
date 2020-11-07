@@ -1,65 +1,68 @@
 {% import "bootstrap/utils.html" as utils %}
 {% extends "base.html" %}
-{% block title %}Formations{% endblock %}
+{% block title %}FORMATIONS{% endblock %}
 {% block body %}
-<div class="content-section">
-  <div class="outer">
-    <div class="middle">
-      <div class="inner">
-        <br/>
-        {{ utils.flashed_messages() }}
-        <br/>
-        <h1 style="text-align:center;">Formations</h1>
-        {% if formations %}
-          <hr class="intro-divider">
-          <div class="center">
-            <table class="table table-striped table-bordered">
-              <thead>
-                <tr>
-                  <th width="15%"> Label Formation </th>
-                  <th width="40%"> Description </th>
-                    <th width="40%"> Departement </th>
-                  <th width="15%"> Edit </th>
-                  <th width="15%"> Delete </th>
-                </tr>
-              </thead>
-              <tbody>
-              {% for formation in formations %}
-                <tr>
-                  <td> <a href="{{ url_for('formations.accueilFormation', id=formation.id) }}"/>
-                        {{ formation.label_formation }}
-                  </a></td>
-                  <td> {{ formation.description }} </td>
-                    <td> {{ formation.departement }} </td>
-                  <td>
-                    <a href="{{ url_for('formations.edit_formations', id=formation.id) }}">
-                      <i class="fa fa-pencil"></i> Edit 
-                    </a>
-                  </td>
-                  <td>
-                    <a href="{{ url_for('formations.delete_formations', id=formation.id) }}">
-                      <i class="fa fa-trash"></i> Delete 
-                    </a>
-                  </td>
-                </tr>
-              {% endfor %}
-              </tbody>
-            </table>
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800">LISTE DES FORMATIONS</h1>
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+               <div align="right">
+               <a href="{{ url_for('formations.add_formations') }}">
+                  <button type="button" class="btn btn-info btn-lg">Add Formation</button>
+               </a>
+             </div>
+            </div>
+            <div class="card-body">
+              {{ utils.flashed_messages() }}
+              <br>
+              <div class="table-responsive">
+                {% if formations %}
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th> Label Formation </th>
+                      <th> Description </th>
+                      <th> Departement </th>
+                      <th> Edit </th>
+                      <th> Delete </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                   {% for formation in formations %}
+                    <tr>
+                      <td><a href="{{ url_for('formations.accueilFormation', id=formation.id) }}"/>
+                            {{ formation.label_formation }}</a></td>
+                      <td> {{ formation.description }} </td>
+                      <td> {{ formation.departement }} </td>
+
+                      <td><a href="{{ url_for('formations.edit_formations', id=formation.id) }}">
+                      <center><button type="button" class="btn btn-outline-success btn-sm">Edit</button></center></a></td>
+
+                      <td><a href="{{ url_for('formations.delete_formations', id=formation.id) }}">
+                      <center><button type="button" class="btn btn-outline-danger btn-sm">DELETE</button></center></a></td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+
+                {% else %}
+                  <div style="text-align: center">
+                    <h3> No formation have been added. </h3>
+                    <hr class="intro-divider">
+                  </div>
+                {% endif %}
+
+              </div>
+            </div>
           </div>
-          <div style="text-align: center">
-        {% else %}
-          <div style="text-align: center">
-            <h3> No Formations have been added. </h3>
-            <hr class="intro-divider">
-        {% endif %}
-          <a href="{{ url_for('formations.add_formations') }}" class="btn btn-default btn-lg">
-            <i class="fa fa-plus"></i>
-            Add Formations
-          </a>
+
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-  </div>
+        <!-- /.container-fluid -->
 {% endblock %}
+
+

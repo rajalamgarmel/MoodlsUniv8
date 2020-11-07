@@ -1,71 +1,74 @@
 {% import "bootstrap/utils.html" as utils %}
 {% extends "base.html" %}
-{% block title %}Professeurs{% endblock %}
+{% block title %}PROFESSEURS{% endblock %}
 {% block body %}
-<div class="content-section">
-  <div class="outer">
-    <div class="middle">
-      <div class="inner">
-        <br/>
-        {{ utils.flashed_messages() }}
-        <br/>
-        <h1 style="text-align:center;">Professeurs</h1>
-        {% if professeurs %}
-          <hr class="intro-divider">
-          <div class="center">
-            <table class="table table-striped table-bordered">
-              <thead>
-                <tr>
-                  <th width="15%"> Nom </th>
-                  <th width="15%"> Prenom </th>
-                  <th width="15%"> Sexe </th>
-                  <th width="15%"> Date de naissance </th>
-                  <th width="15%"> Email </th>
-                  <th width="40%"> Adresse </th>
-                  <th width="15%"> Edit </th>
-                  <th width="15%"> Delete </th>
-                </tr>
-              </thead>
-              <tbody>
-              {% for professeur in professeurs %}
-                <tr>
-                  <td> {{ professeur.nom_prof }} </td>
-                  <td> {{ professeur.prenom_prof }} </td>
-                  <td> {{ professeur.sexe_prof }} </td>
-                  <td> {{ professeur.date_naissance }} </td>
-                  <td> {{ professeur.email }} </td>
-                  <td> {{ professeur.adresse }} {{ professeur.code_postal }}
-                  {{ professeur.ville }} {{ professeur.pays }}</td>
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
 
-                  <td>
-                    <a href="{{ url_for('professeurs.edit_professeurs', id=professeur.id) }}">
-                      <i class="fa fa-pencil"></i> Edit 
-                    </a>
-                  </td>
-                  <td>
-                    <a href="{{ url_for('professeurs.delete_professeurs', id=professeur.id) }}">
-                      <i class="fa fa-trash"></i> Delete 
-                    </a>
-                  </td>
-                </tr>
-              {% endfor %}
-              </tbody>
-            </table>
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800">LISTE DES PROFESSEURS</h1>
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+               <div align="right">
+               <a href="{{ url_for('professeurs.add_professeurs') }}">
+                  <button type="button" class="btn btn-info btn-lg">Add Professeur</button>
+               </a>
+             </div>
+            </div>
+            <div class="card-body">
+              {{ utils.flashed_messages() }}
+              <br>
+              <div class="table-responsive">
+                {% if professeurs %}
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th> Nom </th>
+                      <th> Prenom </th>
+                      <th> Sexe </th>
+                      <th> Date de naissance </th>
+                      <th> Email </th>
+                      <th> Adresse </th>
+                      <th> Edit </th>
+                      <th> Delete </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                   {% for professeur in professeurs %}
+                    <tr>
+                      <td> {{ professeur.nom_prof }} </td>
+                      <td> {{ professeur.prenom_prof }} </td>
+                      <td> {{ professeur.sexe_prof }} </td>
+                      <td> {{ professeur.date_naissance }} </td>
+                      <td> {{ professeur.email }} </td>
+                      <td> {{ professeur.adresse }} {{ professeur.code_postal }}
+                      {{ professeur.ville }} {{ professeur.pays }}</td>
+
+                      <td> <a href="{{ url_for('professeurs.edit_professeurs', id=professeur.id) }}">
+                      <center><button type="button" class="btn btn-outline-success btn-sm">Edit</button></center></a></td>
+
+                      <td><a href="{{ url_for('professeurs.delete_professeurs', id=professeur.id) }}">
+                      <center><button type="button" class="btn btn-outline-danger btn-sm">DELETE</button></center></a></td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+
+                {% else %}
+                  <div style="text-align: center">
+                    <h3> No professeur have been added. </h3>
+                    <hr class="intro-divider">
+                  </div>
+                {% endif %}
+
+              </div>
+            </div>
           </div>
-          <div style="text-align: center">
-        {% else %}
-          <div style="text-align: center">
-            <h3> No Professeur have been added. </h3>
-            <hr class="intro-divider">
-        {% endif %}
-          <a href="{{ url_for('professeurs.add_professeurs') }}" class="btn btn-default btn-lg">
-            <i class="fa fa-plus"></i>
-            Add Professeurs
-          </a>
+
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-  </div>
+        <!-- /.container-fluid -->
 {% endblock %}
+
+

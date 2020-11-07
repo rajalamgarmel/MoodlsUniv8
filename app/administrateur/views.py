@@ -5,7 +5,7 @@ from flask_login import login_required, login_user, logout_user, current_user
 from app.administrateur import administrateur
 from .. import db
 from .forms import LoginForm, ProfilForm
-from ..models import Administrateur
+from ..models import Administrateur, Formation, Etudiant, Departement, Professeur,Matiere
 
 
 @administrateur.route('/loginAdmin', methods=['GET', 'POST'])
@@ -37,7 +37,8 @@ def loginAdmin():
             flash('Invalid email or password.')
 
     # load login template
-    return render_template('administrateur/LoginAdmin.html', form=form, title='Login')
+    return render_template('administrateur/LoginAdmin.html', form=form,
+                           title='Login')
 
 
 @administrateur.route('/logoutAdmin')
@@ -64,7 +65,14 @@ def AccueilSuperAdm():
     if not current_user.is_superadmin:
         abort(403)
 
-    return render_template('administrateur/AccueilSuperAdm.html', title="Accueil Super Administrateur")
+    professeur = len(Professeur.query.all())
+    etudiant = len(Etudiant.query.all())
+    departement = len(Departement.query.all())
+    administrateur = len(Administrateur.query.all())
+
+    return render_template('administrateur/AccueilSuperAdm.html', title="Accueil Super Administrateur"
+                           ,nb_administrateur=administrateur,nb_etudiant=etudiant
+                           ,nb_professeur=professeur,nb_departement=departement)
 
 
 @administrateur.route('/AccueilAdmin')
@@ -73,7 +81,15 @@ def AccueilAdmin():
     """
     Render the dashboard template on the /AccueilAdmin route
     """
-    return render_template('administrateur/AccueilAdmin.html', title="Accueil Administrateur")
+    formation = Formation.query.filter_by(departement_id=current_user.departement_id).count()
+    etudiant = Etudiant.query.join(Formation).join(Departement)\
+        .filter_by(id=current_user.departement_id)\
+        .count()
+    professeur = Professeur.query.all()
+    professeur = len(professeur)
+
+    return render_template('administrateur/AccueilAdmin.html', title="Accueil Administrateur"
+                           , nb_formation=formation, nb_etudiant=etudiant, nb_professeur=professeur)
 
 
 @administrateur.route('/profile')

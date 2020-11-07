@@ -1,13 +1,7 @@
 {% import "bootstrap/utils.html" as utils %}
 {% extends "base.html" %}
-{% block title %}Administrateurs{% endblock %}
+{% block title %}Profile{% endblock %}
 {% block body %}
-<style>
-body{
-background: -webkit-linear-gradient(left, #3931af, #00c6ff);
-}
-</style>
-
 <div class="container emp-profile">
     <br/>
         {{ utils.flashed_messages() }}
@@ -42,6 +36,7 @@ background: -webkit-linear-gradient(left, #3931af, #00c6ff);
                                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="" role="tab" aria-controls="home" aria-selected="true">Informations</a>
                                 </li>
                             </ul>
+                    </div>
                     <div class="col-md-8">
                         <div class="tab-content profile-tab" id="myTabContent">
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -108,10 +103,9 @@ background: -webkit-linear-gradient(left, #3931af, #00c6ff);
                             </div>
                         </div>
                     </div>
-                        </div>
-                    </div>
+                    <div>
                     <a href="{{ url_for('administrateur.edit_profile', id=admin.id) }}"   class="col-md-2">
-                         <input class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/></a>
+                         <input class="btn btn-info" name="btnAddMore" value="Edit Profile"/></a>
                     </div>
                 </div>
                 <div class="row">

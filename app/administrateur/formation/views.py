@@ -11,14 +11,14 @@ from ...models import Formation
 # Formation Views
 
 
-@formations.route('/departements', methods=['GET', 'POST'])
+@formations.route('/formations', methods=['GET', 'POST'])
 @login_required
 def list_formations():
     """
     List all Formations
     """
 
-    formations = Formation.query.all()
+    formations = Formation.query.filter_by(departement_id=current_user.departement_id)
 
     return render_template('administrateur/formations/formations.html',
                            formations=formations, title="Formations")
@@ -37,7 +37,7 @@ def add_formations():
     if form.validate_on_submit():
         formations = Formation(label_formation=form.label_formation.data,
                                description=form.description.data,
-                               departement=form.departement.data)
+                               departement=current_user.departement)
         try:
             # add Formations to the database
             db.session.add(formations)

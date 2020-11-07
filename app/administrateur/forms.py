@@ -50,8 +50,6 @@ class FormationForm(FlaskForm):
     """
     label_formation = StringField('Label Formation', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired()])
-    departement = QuerySelectField(query_factory=lambda: Departement.query.all(),
-                                   get_label="label_departement")
     submit = SubmitField('Register')
 
 

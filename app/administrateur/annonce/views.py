@@ -66,20 +66,17 @@ def edit_annonces(id):
     annonces = Announce.query.get_or_404(id)
     form = AnnonceForm(obj=annonces)
     if form.validate_on_submit():
-        annonces.type = form.type.data
         annonces.titre = form.titre.data
         annonces.contenu = form.contenu.data
-        annonces.date = form.date.data
+        annonces.date = datetime.datetime.now()
         db.session.commit()
         flash('You have successfully edited the annonces.')
 
         # redirect to the annonces page
         return redirect(url_for('annonces.list_annonces', id=annonces.formation_id))
 
-    form.type.data = annonces.type
     form.titre.data = annonces.titre
     form.contenu.data = annonces.contenu
-    form.date.data = annonces.date
     return render_template('administrateur/annonce/annonce.html', action="Edit",
                            add_annonces=add_annonces, form=form,
                            annonces=annonces, title="Edit Annonces")
