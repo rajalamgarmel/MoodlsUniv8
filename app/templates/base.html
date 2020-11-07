@@ -91,6 +91,9 @@
                     <li class="nav-item active">
                     <a class="nav-link" href="{{ url_for('etudiant.AccueilEtud') }}">Home<span class="sr-only">(current)</span></a>
                   </li>
+                      <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('etudiant.profil') }}">Profile</a>
+                  </li>
                   <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('etudiant.logoutEtud') }}">Logout</a>
                   </li>
@@ -99,6 +102,10 @@
 
                     <li class="nav-item active">
                     <a class="nav-link" href="{{ url_for('professeur.AcceuilProfesseur') }}">Home<span class="sr-only">(current)</span></a>
+                  </li>
+                  </li>
+                      <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('professeur.profil') }}">Profile</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('professeur.logoutProf') }}">Logout</a>
@@ -176,7 +183,7 @@
                     </a>
 
                   {% elif current_user.is_authenticated and current_user.type=='etud' %}
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="{{ url_for('etudiant.profil') }}">
                       <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                       Profile
                     </a>
@@ -187,7 +194,7 @@
                     </a>
 
                   {% elif current_user.is_authenticated and current_user.type=='prof' %}
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="{{ url_for('professeur.profil') }}">
                       <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                       Profile
                     </a>
