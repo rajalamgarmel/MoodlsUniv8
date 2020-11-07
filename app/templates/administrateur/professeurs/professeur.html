@@ -2,27 +2,27 @@
 {% extends "base.html" %}
 {% block title %}
     {% if add_professeurs %}
-        Add Professeurs
+        Add Professeur
     {% else %}
-        Edit Professeurs
+        Edit Professeur
     {% endif %}
 {% endblock %}
 {% block body %}
-<div class="content-section">
- <div class="outer">
-    <div class="middle">
-      <div class="inner">
-        <div class="center">
-            {% if add_professeurs %}
-                <h1>Add Professeurs</h1>
-            {% else %}
-                <h1>Edit Professeurs</h1>
-            {% endif %}
-            <br/>
-            {{ wtf.quick_form(form) }}
+        <div class="container-fluid">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+
+                    {% if add_professeurs %}
+                        <center><h1 class="h3 mb-2 text-gray-800">ADD PROFESSEUR</h1></center>
+                    {% else %}
+                        <center><h1 class="h3 mb-2 text-gray-800">EDIT PROFESSEUR</h1></center>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <div class="center">
+                     {{ wtf.quick_form(form) }}
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
 {% endblock %}

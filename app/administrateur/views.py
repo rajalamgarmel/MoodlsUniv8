@@ -67,12 +67,15 @@ def AccueilSuperAdm():
 
     professeur = len(Professeur.query.all())
     etudiant = len(Etudiant.query.all())
-    departement = len(Departement.query.all())
-    administrateur = len(Administrateur.query.all())
+    departements = Departement.query.all()
+    nb_departement = len(departements)
+    administrateurs = Administrateur.query.all()
+    nb_administrateur = len(administrateurs)
 
     return render_template('administrateur/AccueilSuperAdm.html', title="Accueil Super Administrateur"
-                           ,nb_administrateur=administrateur,nb_etudiant=etudiant
-                           ,nb_professeur=professeur,nb_departement=departement)
+                           ,nb_administrateur=nb_administrateur,nb_etudiant=etudiant
+                           ,nb_professeur=professeur,nb_departement=nb_departement,
+                           departements=departements, administrateurs=administrateurs)
 
 
 @administrateur.route('/AccueilAdmin')
@@ -81,15 +84,17 @@ def AccueilAdmin():
     """
     Render the dashboard template on the /AccueilAdmin route
     """
-    formation = Formation.query.filter_by(departement_id=current_user.departement_id).count()
+    formations = Formation.query.filter_by(departement_id=current_user.departement_id)
+    nb_formation = formations.count()
     etudiant = Etudiant.query.join(Formation).join(Departement)\
         .filter_by(id=current_user.departement_id)\
         .count()
-    professeur = Professeur.query.all()
-    professeur = len(professeur)
+    professeurs = Professeur.query.all()
+    nb_professeur = len(professeurs)
 
-    return render_template('administrateur/AccueilAdmin.html', title="Accueil Administrateur"
-                           , nb_formation=formation, nb_etudiant=etudiant, nb_professeur=professeur)
+    return render_template('administrateur/AccueilAdmin.html', title="Accueil Administrateur",
+                           formations=formations,professeurs=professeurs
+                           , nb_formation=nb_formation, nb_etudiant=etudiant, nb_professeur=nb_professeur)
 
 
 @administrateur.route('/profile')

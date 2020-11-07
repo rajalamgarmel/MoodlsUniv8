@@ -5,7 +5,7 @@ from flask_login import login_required, current_user
 from app.administrateur.formation import formations
 from app import db
 from ..forms import FormationForm
-from ...models import Formation
+from ...models import Formation, Etudiant, Matiere, Announce
 
 
 # Formation Views
@@ -107,5 +107,14 @@ def delete_formations(id):
 def accueilFormation(id):
 
     formations = Formation.query.get_or_404(id)
+    etudiants = Etudiant.query.filter_by(formation_id=id)
+    nb_etudiant = etudiants.count()
+    matieres = Matiere.query.filter_by(formation_id=id)
+    nb_matiere = matieres.count()
+    announces = Announce.query.filter_by(formation_id=id)
+    nb_annonce = announces.count()
     return render_template('administrateur/formations/AccueilFormation.html',
-                           formations=formations, title="Accueil Formation")
+                           formations=formations, nb_etudiant=nb_etudiant,
+                           nb_matiere=nb_matiere, nb_annonce=nb_annonce,
+                           etudiants=etudiants, matieres=matieres,
+                           title="Accueil Formation")
