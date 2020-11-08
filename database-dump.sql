@@ -309,7 +309,7 @@ CREATE TABLE `professeur` (
 
 LOCK TABLES `professeur` WRITE;
 /*!40000 ALTER TABLE `professeur` DISABLE KEYS */;
-INSERT INTO `professeur` VALUES (3,'prodesseur','professeur','M','1981-09-06','professeur@gmail.com','professeur','9 rue prince',75000,'FRANCE','PARIS','prof'),(4,'professeur2','professeur2','M','1981-09-06','professeur2@gmail.com','professeur2','19 rue pierre',94800,'FRANCE','VILLEJUIF','prof');
+INSERT INTO `professeur` VALUES (3,'professeur','professeur','M','1981-09-06','professeur@gmail.com','professeur','9 rue prince',75000,'FRANCE','PARIS','prof'),(4,'professeur2','professeur2','M','1981-09-06','professeur2@gmail.com','professeur2','19 rue pierre',94800,'FRANCE','VILLEJUIF','prof');
 /*!40000 ALTER TABLE `professeur` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

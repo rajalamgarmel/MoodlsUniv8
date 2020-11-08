@@ -1,0 +1,71 @@
+{% import "bootstrap/utils.html" as utils %}
+{% extends "base.html" %}
+{% block title %}MATIERES{% endblock %}
+{% block body %}
+        <!-- Begin Page Content -->
+
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+        <div class="row">
+        <div class="col-lg-6 col-md-6">
+        <h1 class="h3 mb-2 text-gray-800">MATIERES</h1>
+        </div>
+        <div class="col-lg-6 col-md-6" align="right">
+            <a href="{{ url_for('etudiant.AccueilEtud') }}">
+                <button type="button" class="btn btn-info">
+                    Retourner à l'Accueil
+                </button>
+            </a>
+        </div>
+    </div>
+
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+              <div class="card-body">
+              {{ utils.flashed_messages() }}
+              <br>
+              <div class="table-responsive">
+                {% if matieres %}
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th> Label Matière </th>
+                      <th> Description </th>
+                      <th> Formation </th>
+                      <th> Professeur </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                   {% for matiere in matieres %}
+                    <tr>
+                      <td>
+                      <a href="{{ url_for('etudiant.list_cours', mat_id=matiere.id) }}">
+                          {{ matiere.label_matiere }}
+                      </a>
+                      </td>
+                      <td> {{ matiere.description }} </td>
+                      <td> {{ matiere.formation.label_formation }} </td>
+                      <td> {{ matiere.professeur.prenom_prof + ' ' + matiere.professeur.nom_prof }} </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+
+                {% else %}
+                  <div style="text-align: center">
+                    <h3> Pas de matières rensignée pour votre formation. </h3>
+                    <hr class="intro-divider">
+                  </div>
+                {% endif %}
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+{% endblock %}
+
+

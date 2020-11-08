@@ -8,11 +8,11 @@
           <!-- Page Heading -->
           <h1 class="h3 mb-2 text-gray-800">VOTRE PROFILE</h1>
           <!-- DataTales Example -->
-        {% for admin in administrateur %}
+        {% for etud in etudiant %}
           <div class="card shadow mb-4">
             <div class="card-header py-3">
                <div align="right">
-               <a href="{{ url_for('administrateur.edit_profile', id=admin.id) }}">
+               <a href="{{ url_for('etudiant.edit_profile', id=etud.id) }}">
                   <button type="button" class="btn btn-info btn-lg">EDIT PROFILE</button>
                </a>
              </div>
@@ -32,14 +32,10 @@
                                     <div class="col-md-6">
                                         <div class="profile-head">
                                                     <h2 class="m-0 font-weight-bold text-primary">
-                                                        {{admin.nom_admin}} {{admin.prenom_admin}}
+                                                        {{etud.nom_admin}} {{etud.prenom_admin}}
                                                     </h2>
                                                     <h6>
-                                                        {% if current_user.is_superadmin %}
-                                                            Fonction :  Administrateur à l'Université Paris 8
-                                                        {% else %}
-                                                            Fonction : Administrateur {{ admin.departement.label_departement }}
-                                                        {% endif %}
+                                                            Fonction : Etudiant {{ etud.formation.label_formation }}
                                                     </h6>
                                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                                 <li class="nav-item">
@@ -55,7 +51,7 @@
                                                                 <label>Nom</label>
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <p>{{admin.nom_admin}}</p>
+                                                                <p>{{etud.nom_etud}}</p>
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -63,7 +59,7 @@
                                                                 <label>Prénom</label>
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <p>{{admin.prenom_admin}}</p>
+                                                                <p>{{etud.prenom_etud}}</p>
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -71,7 +67,7 @@
                                                                 <label>Date de naissance</label>
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <p>{{admin.date_naissance}}</p>
+                                                                <p>{{etud.date_naissance}}</p>
                                                             </div>
                                                         </div>
                                                          <div class="row">
@@ -79,7 +75,7 @@
                                                                 <label>Email</label>
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <p>{{admin.email}}</p>
+                                                                <p>{{etud.email}}</p>
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -87,29 +83,18 @@
                                                                 <label>Adresse</label>
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <p>{{admin.adresse}} {{admin.code_postal}}
-                                                                {{admin.ville}} {{admin.pays}}</p>
+                                                                <p>{{etud.adresse}} {{etud.code_postal}}
+                                                                {{etud.ville}} {{etud.pays}}</p>
                                                             </div>
                                                         </div>
-                                                         {% if not current_user.is_superadmin %}
                                                         <div class="row">
                                                             <div class="col-md-6">
                                                                 <label>UFR</label>
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <p>{{admin.departement.label_departement}}</p>
+                                                                <p>{{etud.formation.label_formation}}</p>
                                                             </div>
                                                         </div>
-                                                        {% else %}
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <label>Fonction</label>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <p>Administrateur à l'Université Paris 8</p>
-                                                            </div>
-                                                        </div>
-                                                          {%endif%}
                                             </div>
                                         </div>
                                     </div>

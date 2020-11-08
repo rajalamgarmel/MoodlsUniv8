@@ -1,0 +1,19 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+{% block title %}
+        Edit Profile
+{% endblock %}
+{% block body %}
+        <div class="container-fluid">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <center><h1 class="h3 mb-2 text-gray-800">EDIT PROFILE</h1></center>
+                </div>
+                <div class="card-body">
+                    <div class="center">
+                     {{ wtf.quick_form(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
