@@ -1,0 +1,74 @@
+{% import "bootstrap/utils.html" as utils %}
+{% extends "base.html" %}
+{% block title %}COURS{% endblock %}
+{% block body %}
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800">LISTE DES COURS</h1>
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+               <div align="right">
+               <a href="{{ url_for('cours.add_cours', id=matiere_id) }}">
+                  <button type="button" class="btn btn-info btn-lg">Add Cours</button>
+               </a>
+             </div>
+            </div>
+            <div class="card-body">
+              {{ utils.flashed_messages() }}
+              <br>
+              <div class="table-responsive">
+                {% if cours %}
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th> Type </th>
+                      <th> Titre </th>
+                      <th> Description </th>
+                      <th> Date </th>
+                      <th> Fichier </th>
+                      <th> Edit </th>
+                      <th> Delete </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                   {% for cour in cours %}
+                    <tr>
+                              <td> {{ cour.type }} </td>
+                              <td> {{ cour.titre }} </td>
+                              <td> {{ cour.description }} </td>
+                              <td> {{ cour.date }} </td>
+                              <center><td> <a href="{{ url_for('cours.download', filename=cour.fichier) }}">
+                                  <i align= "right" class="fa fa-file-pdf-o fa-3x" aria-hidden="true"></i><br>
+                                 </a></td></center>
+
+
+                              <td><a href="{{ url_for('cours.edit_cours', id=cour.id) }}">
+                              <center><button type="button" class="btn btn-outline-success btn-sm">Edit</button></center></a></td>
+
+                              <td><a href="{{ url_for('cours.delete_cours', id=cour.id) }}">
+                              <center><button type="button" class="btn btn-outline-danger btn-sm">DELETE</button></center></a></td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+
+                {% else %}
+                  <div style="text-align: center">
+                    <h3> No cours have been added. </h3>
+                    <hr class="intro-divider">
+                  </div>
+                {% endif %}
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+{% endblock %}
+
+

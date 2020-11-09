@@ -6,13 +6,14 @@ from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-
+from werkzeug.utils import secure_filename
 
 # local imports
 
 db = SQLAlchemy()
 login_manager = LoginManager()
 
+app = Flask(__name__, instance_relative_config=True)
 
 
 def create_app(config_name):
@@ -22,13 +23,12 @@ def create_app(config_name):
 
     login_manager.init_app(app)
     login_manager.login_message = "You must be logged in to access this page."
-    #login_manager.login_view = "etudiant.loginEtud"
+    # login_manager.login_view = "etudiant.loginEtud"
     login_manager.blueprint_login_views = {
         'etudiant': "etudiant.loginEtud",
         'administrateur': "administrateur.loginAdmin",
         'professeur': "professeur.loginProf",
     }
-
 
     Bootstrap(app)
     db.init_app(app)
@@ -41,7 +41,7 @@ def create_app(config_name):
     # app.register_blueprint(admin_blueprint, url_prefix='/admin')
 
     from .etudiant import etudiant as etudiant_blueprint
-    app.register_blueprint(etudiant_blueprint,url_prefix='/etudiant')
+    app.register_blueprint(etudiant_blueprint, url_prefix='/etudiant')
 
     from .professeur import professeur as professeur_blueprint
     app.register_blueprint(professeur_blueprint, url_prefix='/professeur')
@@ -69,6 +69,15 @@ def create_app(config_name):
 
     from app.administrateur.annonce import annonces as annonces_blueprint
     app.register_blueprint(annonces_blueprint, url_prefix='/annonces')
+
+    from app.professeur.annonce import profannonces as prof_annonces_blueprint
+    app.register_blueprint(prof_annonces_blueprint, url_prefix='/prof_annonces')
+
+    from app.professeur.matiere import profmatieres as prof_matieres_blueprint
+    app.register_blueprint(prof_matieres_blueprint, url_prefix='/matieres')
+
+    from app.professeur.cours import cours as cours_blueprint
+    app.register_blueprint(cours_blueprint, url_prefix='/cours')
 
     from .home import home as home_blueprint
     app.register_blueprint(home_blueprint)

@@ -1,0 +1,97 @@
+#--------------------------------------------------------------------------
+#------- ***   Exercice 1
+#--------------------------------------------------------------------------
+
+def isocele(a, b, c):
+    if (a == b or b == c or c == a) and (a != 20 and b != 20 and c != 20):
+        return True;
+    else:
+        return False;
+
+print(isocele(4, 2, 3))
+print(isocele(4, 3, 3))
+print(isocele(5, 3, 4))
+print(isocele(5, 4, 4))
+print(isocele(6, 3, 1))
+
+# Exceptions
+print(isocele(20, 1, 1))
+print(isocele(1, 20, 1))
+print(isocele(1, 1, 20))
+
+print(" ############################################################# EXERCICE 2")
+#--------------------------------------------------------------------------
+#------- ***   Exercice 2
+#--------------------------------------------------------------------------
+import math
+def aire_ordonne(a, b, c):
+    u1 = min(a, b, c)
+    u3 = max(a, b, c)
+
+    if (a == u1 and b == u3):
+        u2 = c
+    elif (a == u1 and c == u3):
+        u2 = b
+    elif (b == u1 and a == u3):
+        u2 = c
+    elif (b == u1 and c == u3):
+        u2 = a
+    elif (c == u1 and b == u3):
+        u2 = a
+    elif (c == u1 and a == u3):
+        u2 = b
+    return (1 / 2) * (math.sqrt(((u1 * u1) * (u3 * u3)) - ((u1 * u1 - u2 * u2 + u3 * u3) / 2) * (
+            (u1 * u1 - u2 * u2 + u3 * u3) / 2)))
+
+
+print(aire_ordonne(4, 2, 3))
+print(aire_ordonne(4, 3, 3))
+print(aire_ordonne(4, 4, 4))
+print(aire_ordonne(3, 4, 5))
+print(aire_ordonne(13, 14, 15))
+print(aire_ordonne(1, 1, 1))
+print(aire_ordonne(6, 8, 10))
+
+
+print(" ############################################################# EXERCICE 3")
+#--------------------------------------------------------------------------
+#------- ***   Exercice 3
+#--------------------------------------------------------------------------
+def definit_triangle(a, b, c):
+    x = (a + b + c) / 2
+    if (a > 0 and a < x) and (b > 0 and b < x) and (c > 0 and c < x):
+        return True
+    else:
+        return False
+
+print(definit_triangle(1, 1, 20))
+print(definit_triangle(4, 2, 3))
+print(definit_triangle(4, 4, 4))
+print(definit_triangle(6, 3, 2))
+print(definit_triangle(7, 7, 7))
+
+
+print(" ############################################################# EXERCICE 4")
+#--------------------------------------------------------------------------
+#------- ***   Exercice 4
+#--------------------------------------------------------------------------
+#from Exercice2 import aire_ordonne
+#from Exercice3 import definit_triangle
+
+def nb_triangles_speciaux(n, p):
+    i = 0
+    if (n > 0 and p > 0):
+        for a in range(n, p+1):
+            for b in range(a+1, p+1):
+                for c in range(b+1, p+1):
+                    if (definit_triangle(a, b, c) == True) and (aire_ordonne(a, b, c) == a + b + c):
+			# print(a,b,c)
+                        i = i + 1
+    return  i
+
+print(nb_triangles_speciaux(1, 20))
+print(nb_triangles_speciaux(5, 15))
+print(nb_triangles_speciaux(2, 10))
+print(nb_triangles_speciaux(3, 20))
+print(nb_triangles_speciaux(6, 50))
+print(nb_triangles_speciaux(5, 15))

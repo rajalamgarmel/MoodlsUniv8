@@ -1,0 +1,134 @@
+{% import "bootstrap/utils.html" as utils %}
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% block body %}
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800">VOTRE PROFILE</h1>
+          <!-- DataTales Example -->
+        {% for prof in professeur %}
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+               <div align="right">
+               <a href="{{ url_for('professeur.edit_profile', id=prof.id) }}">
+                  <button type="button" class="btn btn-info btn-lg">EDIT PROFILE</button>
+               </a>
+             </div>
+            </div>
+            <div class="card-body">
+                        {{ utils.flashed_messages() }}
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="profile-img">
+                                            <img src="{{url_for('static', filename='img/profil.jpg')}}" />
+                                            <div class="file btn btn-lg btn-primary">
+                                                Change Photo
+                                                <input type="file" name="file"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="profile-head">
+                                                    <h2 class="m-0 font-weight-bold text-primary">
+                                                        {{prof.nom_prof}} {{prof.prenom_prof}}
+                                                    </h2>
+                                                    <br>
+
+                                                    <div class="dropdown">
+
+                                                        Professeur de
+
+                                                      <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Liste de Matières
+                                                      </button>
+                                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                          {% for matiere in matieres %}
+                                                        <a class="dropdown-item" href="#">{{matiere.label_matiere}}</a>
+                                                          {% endfor %}
+                                                      </div>
+                                                    </div>
+                                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="" role="tab" aria-controls="home" aria-selected="true">Informations</a>
+                                                </li>
+                                            </ul>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="tab-content profile-tab" id="myTabContent">
+                                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <label>Nom</label>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <p>{{prof.nom_prof}}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <label>Prénom</label>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <p>{{prof.prenom_prof}}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <label>Date de naissance</label>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <p>{{prof.date_naissance}}</p>
+                                                            </div>
+                                                        </div>
+                                                         <div class="row">
+                                                            <div class="col-md-6">
+                                                                <label>Email</label>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <p>{{prof.email}}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <label>Adresse</label>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <p>{{prof.adresse}} {{prof.code_postal}}
+                                                                {{prof.ville}} {{prof.pays}}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <label>Matières</label>
+                                                            </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="dropdown">
+
+                                                                  <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    Liste de Matières
+                                                                  </button>
+                                                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                      {% for matiere in matieres %}
+                                                                    <a class="dropdown-item" href="#">{{matiere.label_matiere}}</a>
+                                                                      {% endfor %}
+                                                                  </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="profile-work">
+                                        </div>
+                                    </div>
+                                </div>
+                    {%endfor%}
+            </div>
+          </div>
+        </div>
+{% endblock %}

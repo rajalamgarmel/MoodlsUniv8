@@ -1,9 +1,48 @@
 {% extends "base.html" %}
 {% block title %}Dashboard{% endblock %}
 {% block body %}
-  <!-- Page Heading -->
-  <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-  </div>
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+          <!-- Page Heading -->
 
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h1 class="h3 mb-2 text-primary">ESPACE PROFESSEURS</h1>
+            </div>
+            <div class="card-body">
+                    <div class="col-xl">
+                      <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">PRESENTATION</div>
+                                 <p class="lead text-justify">Bonjour, {% if current_user.sexe == M %} monsieur {%else%} madame {% endif %}
+                                {{current_user.nom_prof.upper()}} {{current_user.prenom_prof.upper()}},
+                                     vous êtes dans votre espace professeur,
+                                    vous pouvez gérer les matières dont vous êtes professeur,
+                                    vous pouvez également ajouter les cours, les tds, les tps et les notes,
+                                    ainsi vous pouvez ajouter des annonces par matière.</p>
+                                <br>
+                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">LISTE DE VOS MATIERES</div>
+                                    <div class="list-group">
+                                        {% for matiere in matieres %}
+                                        <a href="{{url_for('profmatieres.accueilMatiere', id=matiere.id)}}">
+                                          <button type="button" class="list-group-item list-group-item-action">
+                                              {{matiere.label_matiere}}
+                                          </button></a>
+                                        {% endfor %}
+                                    </div>
+                                  </div>
+                            <div class="col-auto">
+                              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.container-fluid -->
 {% endblock %}
