@@ -16,7 +16,7 @@
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
               <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Votre Département</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">{{current_user.departement}}</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">{{current_user.departement.label_departement}}</div>
             </div>
             <div class="col-auto">
               <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -110,7 +110,7 @@
                   <td><a href="{{ url_for('formations.accueilFormation', id=formation.id) }}"/>
                             {{ formation.label_formation }}</a></td>
                   <td>{{formation.description}}</td>
-                  <td>{{formation.departement}}</td>
+                  <td>{{formation.departement.label_departement}}</td>
                 </tr>
                {% endfor %}
               </tbody>

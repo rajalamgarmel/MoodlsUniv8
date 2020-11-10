@@ -1,11 +1,12 @@
 # app/etudiant/views.py
 
-from flask import flash, redirect, render_template, url_for, abort
+from flask import flash, redirect, render_template, url_for, abort, request
 from flask_login import login_required, current_user
 from app.administrateur.etudiant import etudiants
 from app import db
 from ..forms import EtudForm
 from ...models import Etudiant
+from ...models import Matiere
 
 
 @etudiants.route('/etudiants/<int:id>', methods=['GET', 'POST'])

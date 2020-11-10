@@ -173,7 +173,7 @@ class Professeur(UserMixin, db.Model):
         return 'professeur.' + str(self.id)
 
     def __repr__(self):
-        return '<professeur: {}>'.format(self.nom_prof, self.prenom_prof)
+        return '<Professeur : {}>'.format(self.nom_prof + ' ' + self.prenom_prof)
 
 
 class Announce(db.Model):

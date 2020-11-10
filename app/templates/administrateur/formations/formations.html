@@ -12,7 +12,7 @@
             <div class="card-header py-3">
                <div align="right">
                <a href="{{ url_for('formations.add_formations') }}">
-                  <button type="button" class="btn btn-info btn-lg">Add Formation</button>
+                  <button type="button" class="btn btn-info btn-lg">Ajouter Formation</button>
                </a>
              </div>
             </div>
@@ -37,7 +37,7 @@
                       <td><a href="{{ url_for('formations.accueilFormation', id=formation.id) }}"/>
                             {{ formation.label_formation }}</a></td>
                       <td> {{ formation.description }} </td>
-                      <td> {{ formation.departement }} </td>
+                      <td> {{ formation.departement.label_departement }} </td>
 
                       <td><a href="{{ url_for('formations.edit_formations', id=formation.id) }}">
                       <center><button type="button" class="btn btn-outline-success btn-sm">Edit</button></center></a></td>

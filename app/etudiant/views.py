@@ -1,12 +1,13 @@
 # app/etudiant/views.py
 from pathlib import Path
 
-from flask import flash, redirect, render_template, url_for, request, send_file, current_app
+from flask import flash, redirect, render_template, url_for, request, send_file, current_app, session
 from flask_login import login_required, login_user, logout_user, current_user
 from .. import db
 from app.etudiant import etudiant
 from .forms import LoginForm, ProfilForm
-from ..models import Etudiant, Matiere, Cours, Announce
+from ..models import Etudiant, Matiere, Cours, Announce, Administrateur, Formation, Departement, Professeur
+from sqlalchemy import func, or_
 
 
 @etudiant.route('/loginEtud', methods=['GET', 'POST'])
@@ -55,8 +56,23 @@ def AccueilEtud():
     """
     Render the dashboard template on the /AccueilEtud route
     """
-    nombre_matieres = Matiere.query.filter_by(formation_id=current_user.formation_id).count()
-    return render_template('etudiant/AccueilEtud.html',nb_matieres =nombre_matieres, title="Accueil Etudiant")
+    matieres = Matiere.query.filter_by(formation_id=current_user.formation_id)
+    formation = Formation.query.filter_by(id=current_user.formation_id)
+    nombre_matieres = matieres.count()
+    nb_cours = Cours.query.join(Matiere).filter_by(formation_id=current_user.formation_id).count()
+
+    annonces_admins = Announce.query.filter_by(formation_id=current_user.formation_id).order_by(Announce.id.desc())
+    annonces_admin = annonces_admins.first()
+    annonces_profs = Announce.query.join(Matiere).filter_by(formation_id=current_user.formation_id).order_by(Announce.id.desc())
+    annonces_prof = annonces_profs.first()
+
+    nb_annonces = annonces_admins.count() + annonces_profs.count()
+
+    return render_template('etudiant/AccueilEtud.html', nombre_matieres=nombre_matieres, matieres=matieres,
+                           nb_cours=nb_cours, nb_annonces=nb_annonces,
+                          formation=formation, title="Accueil Etudiant",
+                           annonces_admin=annonces_admin, annonces_prof=annonces_prof)
+
 
 @etudiant.route('/profile')
 @login_required
@@ -107,6 +123,7 @@ def edit_profile(id):
     return render_template('etudiant/profile/edit_profile.html', action="Edit", form=form,
                            etudiant=etudiant, title="Edit Profile")
 
+
 @etudiant.route('/matieres', methods=['GET'])
 @login_required
 def list_matieres():
@@ -118,6 +135,7 @@ def list_matieres():
     return render_template('etudiant/matieres/matieres.html', idFormation=id,
                            matieres=matieres, title="Matieres")
 
+
 @etudiant.route('matieres/<int:mat_id>/cours', methods=['GET'])
 @login_required
 def list_cours(mat_id):
@@ -126,8 +144,9 @@ def list_cours(mat_id):
     """
 
     crs = Cours.query.filter_by(matiere_id=mat_id);
+    matiere = Matiere.query.filter_by(id=mat_id).one()
 
-    return render_template('etudiant/matieres/cours/cours.html', cours=crs, title="Cours")
+    return render_template('etudiant/matieres/cours/cours.html', cours=crs, matiere=matiere, title="Cours")
 
 
 @etudiant.route('anonnces', methods=['GET'])
@@ -137,9 +156,13 @@ def list_annonces():
     List all courses
     """
 
-    annonces = Announce.query.filter_by(formation_id=current_user.formation_id);
+    annonces = Announce.query.filter().order_by(Announce.id.desc());
+    matiere = Matiere.query.filter_by(formation_id=current_user.formation_id)
+    formation = Formation.query.filter_by(id=current_user.formation_id)
 
-    return render_template('etudiant/annonces/annonces.html', annonces=annonces, title="Annonces")
+    return render_template('etudiant/annonces/annonces.html', annonces=annonces,
+                           formation=formation, matiere=matiere, title="Annonces")
+
 
 @etudiant.route('matieres/<int:matiere_id>/cours/<string:file_path>', methods=['GET', 'POST'])
 def download_file(file_path, matiere_id):
