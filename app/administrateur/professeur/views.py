@@ -33,6 +33,10 @@ def add_professeurs():
                                  prenom_prof=form.prenom.data,
                                  sexe_prof=form.sexe.data,
                                  email=form.email.data,
+                                 adresse=form.adresse.data,
+                                 code_postal=form.code_postal.data,
+                                 ville=form.ville.data,
+                                 pays=form.pays.data,
                                  date_naissance=form.dateNaissance.data,
                                  password_hash=form.dateNaissance.data)
 

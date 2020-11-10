@@ -71,7 +71,7 @@ class Administrateur(UserMixin, db.Model):
         return 'administrateur.' + str(self.id)
 
     def __repr__(self):
-        return '<Administrateur: {}>'.format(self.nom_admin)
+        return '[Administrateur: {}]'.format(self.nom_admin)
 
 
 class Etudiant(UserMixin, db.Model):
@@ -173,7 +173,7 @@ class Professeur(UserMixin, db.Model):
         return 'professeur.' + str(self.id)
 
     def __repr__(self):
-        return '<professeur: {}>'.format(self.nom_prof, self.prenom_prof)
+        return '[Professeur : {}]'.format(self.nom_prof + ' ' + self.prenom_prof)
 
 
 class Announce(db.Model):
@@ -185,13 +185,13 @@ class Announce(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     titre = db.Column(db.String(200))
-    contenu = db.Column(db.String(400))
+    contenu = db.Column(db.String(1000))
     date = db.Column(db.Date())
     matiere_id = db.Column(db.Integer, db.ForeignKey('matiere.id'))
     formation_id = db.Column(db.Integer, db.ForeignKey('formation.id'))
 
     def __repr__(self):
-        return '<Announce: {}>'.format(self.titre)
+        return '[Announce: {}]'.format(self.titre)
 
 
 class Cours(db.Model):
@@ -203,14 +203,14 @@ class Cours(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.String(200))
-    titre = db.Column(db.String(200))
+    titre = db.Column(db.String(500))
     description = db.Column(db.String(200))
     fichier = db.Column(db.String(200))
     date = db.Column(db.Date())
     matiere_id = db.Column(db.Integer, db.ForeignKey('matiere.id'))
 
     def __repr__(self):
-        return '<Cours: {}>'.format(self.titre)
+        return '[Cours: {}]'.format(self.titre)
 
 
 class Matiere(db.Model):
@@ -221,7 +221,7 @@ class Matiere(db.Model):
     __tablename__ = 'matiere'
 
     id = db.Column(db.Integer, primary_key=True)
-    label_matiere = db.Column(db.String(60), unique=True)
+    label_matiere = db.Column(db.String(200), unique=True)
     description = db.Column(db.String(200))
     formation_id = db.Column(db.Integer, db.ForeignKey('formation.id'))
     professeur_id = db.Column(db.Integer, db.ForeignKey('professeur.id'))
@@ -242,7 +242,7 @@ class Formation(db.Model):
     __tablename__ = 'formation'
 
     id = db.Column(db.Integer, primary_key=True)
-    label_formation = db.Column(db.String(60), unique=True)
+    label_formation = db.Column(db.String(100), unique=True)
     description = db.Column(db.String(200))
     departement_id = db.Column(db.Integer, db.ForeignKey('departement.id'))
     etudiant = db.relationship('Etudiant', backref='formation',
@@ -253,7 +253,7 @@ class Formation(db.Model):
                                lazy='dynamic')
 
     def __repr__(self):
-        return '<Formation: {}>'.format(self.label_formation)
+        return '[Formation: {}]'.format(self.label_formation)
 
 
 class Departement(db.Model):
@@ -272,4 +272,4 @@ class Departement(db.Model):
                                 lazy='dynamic')
 
     def __repr__(self):
-        return '<Departement: {}>'.format(self.label_departement)
+        return '[Departement: {}]'.format(self.label_departement)

@@ -45,7 +45,7 @@
                       <td> {{ administrateur.email }} </td>
                       <td> {{ administrateur.adresse }} {{ administrateur.code_postal }}
                       {{ administrateur.ville }} {{ administrateur.pays }}</td>
-                      <td> {{ administrateur.departement }} </td>
+                      <td> {{ administrateur.departement.label_departement }} </td>
 
                       <td><a href="{{ url_for('administrateurs.edit_administrateurs', id=administrateur.id) }}">
                       <center><button type="button" class="btn btn-outline-success btn-sm">Edit</button></center></a></td>

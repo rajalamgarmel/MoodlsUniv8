@@ -8,7 +8,7 @@
     <!-- Page Heading -->
     <div class="row">
         <div class="col-lg-6 col-md-6">
-        <h1 class="h3 mb-2 text-gray-800">ANNONCES</h1>
+        <h1 class="h3 mb-2 text-primary">ANNONCES</h1>
         </div>
         <div class="col-lg-6 col-md-6" align="right">
             <a href="{{ url_for('etudiant.AccueilEtud') }}">
@@ -17,51 +17,99 @@
                 </button>
             </a>
 
-            <!--                  <a href="{{ url_for('etudiant.list_matieres') }}">-->
-            <!--                  <button >-->
-            <!--                       <i class="fa fa-arrow-left" aria-hidden="true"></i>-->
-            <!--                  </button>-->
-            <!--               </a>-->
-
         </div>
     </div>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
+
+                <!-- Card Body -->
         <div class="card-body">
-            {{ utils.flashed_messages() }}
-            <br>
-            <div class="table-responsive">
-                {% if annonces %}
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                    <tr>
-                        <th> Titre</th>
-                        <th> Contenu</th>
+            {% if annonces %}
+            {% for annonce in annonces %}
+                {% if annonce.matiere_id != None %}
+                        {% for mat in matiere %}
+                            {% if mat.id == annonce.matiere_id%}
+                                 <div class="jumbotron">
+                                     <div align="right"><span>
+                                         {{mat.professeur}} {{mat.label_matiere}}, le {{annonce.date}}</span></div>
+                                        <hr class="my-4">
+                                         <h3 class="display-6" class="text-primary">{{annonce.titre}}</h3>
+                                         <p class="lead">{{annonce.contenu[:250]}}</p>
+                                              <!-- Button trigger modal -->
+                                          <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#{{annonce.id}}">
+                                            Afficher plus
+                                           </button>
+                                          <hr class="my-4">
+                                 </div>
+                            {%endif%}
+                        {%endfor%}
+                {%else%}
+                        {% for form in formation %}
+                            {% if form.id == annonce.formation_id%}
+                                  <div class="jumbotron">
+                                       <div align="right"><span>
+                                           Administration {{form.departement}}, le {{annonce.date}}</span></div>
+                                        <hr class="my-4">
+                                      <h3 class="display-6" class="text-primary">{{annonce.titre}}</h3>
+                                      <p class="lead">{{annonce.contenu[:250]}}</p>
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#{{annonce.id}}">
+                                          Afficher plus
+                                        </button>
+                                        <hr class="my-4">
+                                </div>
+                            {%endif%}
+                        {%endfor%}
+                {%endif%}
 
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for annonce in annonces %}
-                    <tr>
-                        <td>
-                            {{ annonce.titre }}
-                        </td>
-                        <td> {{ annonce.contenu }}</td>
+            <!-- Modal -->
+            <div class="modal fade" id="{{annonce.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><h3 class="display-6">{{annonce.titre}}</h3></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
 
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-
-
-                {% else %}
-                <div style="text-align: center">
-                    <h3> Pas d'annonce actuellement </h3>
-                    <hr class="intro-divider">
+                    {% if annonce.matiere_id != None %}
+                        {% for mat in matiere %}
+                           {% if mat.id == annonce.matiere_id%}
+                                <div class="jumbotron">
+                                  <div align="right"><span>
+                                      {{mat.professeur}} {{mat.label_matiere}}, le {{annonce.date}}</span></div>
+                                  <hr class="my-4">
+                                  <p  class="lead text-justify">{{annonce.contenu}}</p>
+                                  <hr class="my-4">
+                                </div>
+                            {%endif%}
+                        {%endfor%}
+                    {% else %}
+                        {% for form in formation %}
+                            {% if form.id == annonce.formation_id%}
+                                 <div class="jumbotron">
+                                          <div align="right"><span> Administration {{form.departement}}, le {{annonce.date}}</span></div>
+                                      <hr class="my-4">
+                                      <p  class="lead text-justify">{{annonce.contenu}}</p>
+                                      <hr class="my-4">
+                                </div>
+                            {%endif%}
+                        {%endfor%}
+                    {% endif %}
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
                 </div>
-                {% endif %}
-
+              </div>
             </div>
+            {% endfor %}
+            {% else %}
+            <div style="text-align: center">
+                <h3> Pas d'annonce actuellement </h3>
+                <hr class="intro-divider">
+            </div>
+            {% endif %}
         </div>
     </div>
 

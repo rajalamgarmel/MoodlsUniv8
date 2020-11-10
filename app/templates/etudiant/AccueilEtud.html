@@ -3,22 +3,22 @@
 {% block body %}
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Table de bord</h1>
+    <h1 class="h3 mb-0 text-gray-800">VOUS ETES INSCRIT DANS :  <strong>{{ current_user.formation }}</strong></h1>
   </div>
-<div class="row">
-     <div class="col-xl-3 col-md-6 mb-4">
+
+  <!-- Content Row -->
+  <div class="row">
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-4 col-md-6 mb-4">
       <div class="card border-left-success shadow h-100 py-2">
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                  {{current_user.formation.label_formation}}
-              </div>
+              <div class="text-xs font-weight-bold text-success text-uppercase mb-1"> Votre Formation </div>
               <div class="h5 mb-0 font-weight-bold text-gray-800">
-                    <a href="{{ url_for('etudiant.list_matieres') }}">
-                        {{nb_matieres}} Matières
-                    </a>
-              </div>
+                  <a href="">
+                       {{ current_user.formation.label_formation }}</a></div>
             </div>
             <div class="col-auto">
               <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -27,26 +27,176 @@
         </div>
       </div>
     </div>
-     <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-success shadow h-100 py-2">
+
+    <div class="col-xl-4 col-md-6 mb-4">
+      <div class="card border-left-info shadow h-100 py-2">
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                  {{current_user.formation.label_formation}}
-              </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">
-                    <a href="{{ url_for('etudiant.list_annonces') }}">
-                        {{nb_annonces}} Annonces
-                    </a>
+              <div class="text-xs font-weight-bold text-info text-uppercase">Vous pouvez consulter les cours</div>
+              <div class="row no-gutters align-items-center">
+                <div class="col-auto">
+                  <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                      <a href="{{ url_for('etudiant.list_matieres') }}">
+                     {{nombre_matieres}} matières</a></div>
+                </div>
+                <div class="col">
+                </div>
               </div>
             </div>
             <div class="col-auto">
-              <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+              <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
             </div>
           </div>
         </div>
       </div>
     </div>
-     </div>
+
+    <div class="col-xl-4 col-md-6 mb-4">
+      <div class="card border-left-warning shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Consulter les annonces</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                  <a href="{{url_for('etudiant.list_annonces')}}">
+                    Vous avez {{nb_annonces}} annonces</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Row -->
+
+  <div class="row">
+
+
+    <div class="col-xl-8 col-lg-7">
+      <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary">DERNIÈRES ANNONCES</h6>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+            {% if annonces_prof != None and annonces_prof.id > annonces_admin.id %}
+                    {% for mat in matieres %}
+                        {% if mat.id == annonces_prof.matiere_id%}
+                            <div class="jumbotron">
+                                  <div align="right"><span> {{mat.professeur}} {{mat.label_matiere}}, le {{annonces_prof.date}}</span></div>
+                                <hr class="my-4">
+                              <h3 class="display-6" class="text-primary">{{annonces_prof.titre}}</h3>
+                              <p class="lead">{{annonces_prof.contenu[:150]}}</p>
+                              <hr class="my-4">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
+                                  Afficher plus
+                                </button>
+                            </div>
+                             <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel"><h3 class="display-6">{{annonces_prof.titre}}</h3></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                        <div class="jumbotron">
+                                          <div align="right"><span>
+                                              {{mat.professeur}} {{mat.label_matiere}}, le {{annonces_prof.date}}</span></div>
+                                          <hr class="my-4">
+                                          <p  class="lead text-justify">{{annonces_prof.contenu}}</p>
+                                          <hr class="my-4">
+                                        </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        {%endif%}
+                    {%endfor%}
+            {% elif annonces_admin != None %}
+                   {% for form in formation %}
+                            {% if form.id == annonces_admin.formation_id%}
+                                  <div class="jumbotron">
+                                       <div align="right"><span>
+                                           Administration {{form.departement}}, le {{annonces_admin.date}}</span></div>
+                                        <hr class="my-4">
+                                      <h3 class="display-6" class="text-primary">{{annonces_admin.titre}}</h3>
+                                      <p class="lead">{{annonces_admin.contenu[:250]}}</p>
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal1">
+                                          Afficher plus
+                                        </button>
+                                        <hr class="my-4">
+                                </div>
+                           <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel1"><h3 class="display-6">{{annonces_admin.titre}}</h3></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                        <div class="jumbotron">
+                                          <div align="right"><span>
+                                               Administration {{form.departement}}, le {{annonces_admin.date}}</span></div>
+                                          <hr class="my-4">
+                                          <p  class="lead text-justify">{{annonces_admin.contenu}}</p>
+                                          <hr class="my-4">
+                                        </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        {%endif%}
+                    {%endfor%}
+            {% else %}
+            <div style="text-align: center">
+                <h3> Pas d'annonce actuellement </h3>
+                <hr class="intro-divider">
+            </div>
+            {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Pie Chart -->
+    <div class="col-xl-4 col-lg-5">
+      <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary">LISTE DES MATIÈRES</h6>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+              <ul class="list-group">
+              {% for matiere in matieres%}
+                 {% if matiere.id == 1 %}
+                  <a href="{{ url_for('etudiant.list_cours', mat_id=matiere.id) }}"><li class="list-group-item d-flex justify-content-between align-items-center active">
+                      {{matiere.label_matiere}}</li></a>
+                 {% else %}
+                  <a href="{{ url_for('etudiant.list_cours', mat_id=matiere.id) }}"><li class="list-group-item d-flex justify-content-between align-items-center">
+                      {{matiere.label_matiere}}</li></a>
+                 {% endif %}
+                  {% endfor %}
+              </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Content Row -->
+  <div class="row">
+
+    <!-- Content Column -->
+
+  </div>
 {% endblock %}

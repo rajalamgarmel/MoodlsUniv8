@@ -95,11 +95,13 @@
                       <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('etudiant.profil') }}">Profile</a>
                   </li>
-
-
+                  </li>
                   </li>
                       <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('etudiant.list_matieres') }}">Matières</a>
+                  </li>
+                      <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('etudiant.list_annonces') }}">Annonces</a>
                   </li>
 
                   <li class="nav-item">
@@ -164,19 +166,19 @@
             <li class="nav-item dropdown no-arrow">
                 {% if current_user.is_authenticated and current_user.type=='admin' %}
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{current_user.nom_admin}} {{current_user.prenom_admin}}</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{current_user.nom_admin.upper()}} {{current_user.prenom_admin}}</span>
                 <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
               </a>
 
             {% elif current_user.is_authenticated and current_user.type=='etud' %}
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{current_user.nom_etud}} {{current_user.prenom_etud}}</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{current_user.nom_etud.upper()}} {{current_user.prenom_etud}}</span>
                 <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
               </a>
 
             {% elif current_user.is_authenticated and current_user.type=='prof' %}
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{current_user.nom_prof}} {{current_user.prenom_prof}}</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{current_user.nom_prof.upper()}} {{current_user.prenom_prof}}</span>
                 <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
               </a>
             {%endif%}
@@ -184,34 +186,28 @@
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                   {% if current_user.is_authenticated and current_user.type=='admin' %}
                     <a class="dropdown-item" href="{{ url_for('administrateur.profil') }}">
-                      <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                       Profile
                     </a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{ url_for('administrateur.logoutAdmin') }}">
-                      <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                       Logout
                     </a>
 
                   {% elif current_user.is_authenticated and current_user.type=='etud' %}
                     <a class="dropdown-item" href="{{ url_for('etudiant.profil') }}">
-                      <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                       Profile
                     </a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{ url_for('etudiant.logoutEtud') }}">
-                      <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                       Logout
                     </a>
 
                   {% elif current_user.is_authenticated and current_user.type=='prof' %}
                     <a class="dropdown-item" href="{{ url_for('professeur.profil') }}">
-                      <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                       Profile
                     </a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{ url_for('professeur.logoutProf') }}">
-                      <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                       Logout
                     </a>
                   {%endif%}

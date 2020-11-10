@@ -100,7 +100,7 @@ class AnnonceForm(FlaskForm):
     Form for Admin to create new Annonce
     """
     titre = StringField('titre', validators=[DataRequired()])
-    contenu = TextAreaField('contenu')
+    contenu = TextAreaField('contenu',  render_kw={"rows": 15, "cols": 5})
     submit = SubmitField('Register')
 
 class ProfilForm(FlaskForm):
