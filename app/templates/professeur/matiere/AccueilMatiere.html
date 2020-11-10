@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block body %}
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">DASHBOARD DE LA MATIERE :  <strong>{{ matieres.label_matiere.upper()}}</strong></h1>
+    <a href="{{url_for('profannonces.list_annonces', id=matieres.id)}}">
+      <button type="button" class="btn btn-info btn-sm">AJOUTER UNE ANNONCE</button>
+    </a>
+    <a href="{{url_for('cours.list_cours', id=matieres.id)}}">
+      <button type="button" class="btn btn-success btn-sm">AJOUTER UN COURS</button>
+    </a>
+  </div>
+
+  <!-- Content Row -->
+  <div class="row">
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-4 col-md-6 mb-4">
+      <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-success text-uppercase mb-1"> Nombre des étudiants dans la formation </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                  <a href="">
+                      {{nb_etudiant}} Etudiants</a></div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-4 col-md-6 mb-4">
+      <div class="card border-left-info shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-info text-uppercase">Nombre de cours que vous avez ajoutés</div>
+              <div class="row no-gutters align-items-center">
+                <div class="col-auto">
+                  <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                      <a href="{{url_for('cours.list_cours', id=matieres.id)}}">
+                       {{nb_cours}}  Cours</a></div>
+                </div>
+                <div class="col">
+                </div>
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-4 col-md-6 mb-4">
+      <div class="card border-left-warning shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Ajouter une nouvelle annonce</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                  <a href="{{url_for('profannonces.list_annonces', id=matieres.id)}}">
+                      {{nb_annonce}} Annonces</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Row -->
+
+  <div class="row">
+
+
+    <div class="col-xl-7 col-lg-7">
+      <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary">GESTION DES COURS</h6>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+            <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Type</th>
+                <th scope="col">Titre</th>
+                <th scope="col">Description</th>
+                <th scope="col">Date</th>
+                <th scope="col">Fichier</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for cour in cours %}
+              <tr>
+                <td>{{cour.type}}</td>
+                <td>{{cour.titre}}</td>
+                <td>{{cour.description}}</td>
+                <td>{{cour.date}}</td>
+                <center><td> <a href="{{ url_for('cours.download', filename=cour.fichier) }}">
+                          <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i><br>
+                         </a></td></center>
+              </tr>
+             {% endfor %}
+            </tbody>
+        </table>
+            <a href="{{ url_for('cours.list_cours',id=matieres.id)}}">
+              <center><button type="button" class="btn btn-info btn-sm">PLUS</button></center>
+            </a>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Pie Chart -->
+    <div class="col-xl-5 col-lg-5">
+      <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary">LISTE DES ETUDIANTS</h6>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="">Nom</th>
+                <th scope="">Prénom</th>
+                <th scope="">Email</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for etudiant in etudiants %}
+              <tr>
+                <td>{{etudiant.nom_etud}}</td>
+                <td>{{etudiant.prenom_etud}}</td>
+                <td>{{etudiant.email}}</td>
+              </tr>
+             {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Content Row -->
+  <div class="row">
+
+    <!-- Content Column -->
+
+  </div>
+{% endblock %}
