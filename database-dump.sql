@@ -18,7 +18,7 @@
 --
 -- Table structure for table `administrateur`
 --
-USE flask_db;
+
 DROP TABLE IF EXISTS `administrateur`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -90,8 +90,8 @@ DROP TABLE IF EXISTS `annonce`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `annonce` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `titre` varchar(200) DEFAULT NULL,
-  `contenu` varchar(400) DEFAULT NULL,
+  `titre` varchar(400) DEFAULT NULL,
+  `contenu` varchar(1000) DEFAULT NULL,
   `date` date DEFAULT NULL,
   `matiere_id` int(11) DEFAULT NULL,
   `formation_id` int(11) DEFAULT NULL,
@@ -123,15 +123,15 @@ DROP TABLE IF EXISTS `cours`;
 CREATE TABLE `cours` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(200) DEFAULT NULL,
-  `titre` varchar(200) DEFAULT NULL,
-  `description` varchar(200) DEFAULT NULL,
+  `titre` varchar(400) DEFAULT NULL,
+  `description` varchar(400) DEFAULT NULL,
   `fichier` varchar(200) DEFAULT NULL,
   `date` date DEFAULT NULL,
   `matiere_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `matiere_id` (`matiere_id`),
   CONSTRAINT `cours_ibfk_1` FOREIGN KEY (`matiere_id`) REFERENCES `matiere` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -140,7 +140,7 @@ CREATE TABLE `cours` (
 
 LOCK TABLES `cours` WRITE;
 /*!40000 ALTER TABLE `cours` DISABLE KEYS */;
-INSERT INTO `cours` VALUES (1,'COURS','Python','Cours de pyhon','attestation-2020-10-21_13-07.pdf','2020-11-08',2),(2,'TD','Intelligence Artificielle','TP 3 du cours de l\'Intelligence Artificielle, à rendre avant minuit','paris7.png','2020-11-08',2),(3,'NOTES','Test','for tests','attestation-2020-10-21_13-07.pdf','2020-11-08',2),(4,'COURS','Test2','2','TP1_LAMGARMEL_RAJA.txt','2020-11-08',2),(5,'TP','Python','Python IA','CMakeLists.txt','2020-11-09',1);
+INSERT INTO `cours` VALUES (1,'COURS','Python','Cours de pyhon','attestation-2020-10-21_13-07.pdf','2020-11-08',2),(2,'TD','Intelligence Artificielle','TP 3 du cours de l\'Intelligence Artificielle, à rendre avant minuit','paris7.png','2020-11-08',2),(3,'NOTES','Test','for tests','attestation-2020-10-21_13-07.pdf','2020-11-08',2),(4,'COURS','Test2','2','TP1_LAMGARMEL_RAJA.txt','2020-11-08',2),(5,'TP','Python','Python','Outils_libres_pour_le_d_veloppement_logiciel_1.pdf','2020-11-10',1),(6,'COURS','Outils Libres','Outils libres pour le développement logiciel','Outils_libres_pour_le_d_veloppement_logiciel_1.pdf','2020-11-10',1),(7,'TD','TD Outils libres pour le développement logiciel','Outils libres pour le développement logiciel','Outils_libres_pour_le_d_veloppement_logiciel_1.pdf','2020-11-10',1),(8,'NOTES','NOTES DES MODULE','Outils libres pour le développement logiciel','Outils_libres_pour_le_d_veloppement_logiciel_1.pdf','2020-11-10',1),(9,'COURS','Outils libres pour le développement logiciel-Modif1','Outils libres pour le développement logiciel','Outils_libres_pour_le_d_veloppement_logiciel_1.pdf','2020-11-10',1),(10,'COURS','Outils libres pour le développement logiciel-Modif2','Outils libres pour le développement logiciel','Outils_libres_pour_le_d_veloppement_logiciel_1.pdf','2020-11-10',1),(11,'COURS','Update Cours 08/10','Outils libres pour le développement logiciel','Outils_libres_pour_le_d_veloppement_logiciel_1.pdf','2020-11-10',1),(12,'TP','TP 2','Outils libres pour le développement logiciel','Consignes_rendu_des_TPs_et_projets.pdf','2020-11-10',1),(13,'TD','TD 2','Outils libres pour le développement logiciel','PROBASUITE.pdf','2020-11-10',1);
 /*!40000 ALTER TABLE `cours` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -252,7 +252,7 @@ DROP TABLE IF EXISTS `matiere`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `matiere` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `label_matiere` varchar(60) DEFAULT NULL,
+  `label_matiere` varchar(200) DEFAULT NULL,
   `description` varchar(200) DEFAULT NULL,
   `formation_id` int(11) DEFAULT NULL,
   `professeur_id` int(11) DEFAULT NULL,
@@ -310,7 +310,7 @@ CREATE TABLE `professeur` (
 
 LOCK TABLES `professeur` WRITE;
 /*!40000 ALTER TABLE `professeur` DISABLE KEYS */;
-INSERT INTO `professeur` VALUES (3,'FND','Jack','M','1981-09-06','professeur@gmail.com','professeur','9 rue princee',75000,'FRANCE','PARIS','prof'),(4,'TALIBI','Youssef','M','1981-09-06','talibi@gmail.com','professeur2','19 rue pierre',94800,'FRANCE','VILLEJUIF','prof'),(5,'BUILLSON','Franck','M','1989-10-09','franck@gmail.com','1989-10-09','98 Impasse',75011,'FRANCE','PARIS','prof'),(6,'Seddiki','Lynda','F','1990-01-01','seddiki@gmail.com','1990-01-01','9 rue lyon',75000,'FRANCE','PARIS','prof'),(7,'Mariage','Jean','M','1990-01-01','mariage@gmail.com','1990-01-01','12 rue de provence',75000,'FRANCE','PARIS','prof'),(8,'Ali Chérif','Arab','M','1990-01-01','arab@gmail.com','1990-01-01','9 rue de lille',94000,'FRANCE','VILLEJUIF','prof'),(9,'Berrouachedi','Abdelghani','M','1990-01-01','berrouachedi@gmail.com','1990-01-01','9 rue pierre legrande',75000,'FRANCE','PARIS','prof'),(10,'Akdag','Herman','M','1990-01-01','akdag@gmail.com','1990-01-01','9 rue de ST etienne',92000,'FRANCE','PUTEAUX','prof'),(11,'Mehhadi','Ilyes','M','1990-01-01','mehhadi@gmail.com','1990-01-01','9 rue de lyon',75000,'FRANCE','PARIS','prof'),(12,'Ammi','Mehdi','M','1990-01-01','ammi@gmail.com','1990-01-01','9 rue pierre legrand',75000,'FRANCE','PARIS','prof');
+INSERT INTO `professeur` VALUES (3,'FND','Jack','M','1981-09-06','professeur@gmail.com','professeur','9 rue princee',75000,'FRANCE','PARIS','prof'),(4,'TALIBI','Youssef','M','1981-09-06','talibi@gmail.com','professeur2','19 rue pierre',94800,'FRANCE','VILLEJUIF','prof'),(5,'BUILLSON','Franck','M','1989-10-09','franck@gmail.com','1989-10-09','98 Impasse',75011,'FRANCE','PARIS','prof'),(6,'Seddiki','Lynda','F','1990-01-01','seddiki@gmail.com','1990-01-01','9 rue lyon',75000,'FRANCE','PARIS','prof'),(7,'Mariage','Jean','M','1990-01-01','mariage@gmail.com','1990-01-01','12 rue de provence',75000,'FRANCE','PARIS','prof'),(8,'Ali Chérif','Arab','M','1990-01-01','arab@gmail.com','1990-01-01','9 rue de lille',94000,'FRANCE','VILLEJUIF','prof'),(9,'Berrouachedi','Abdelkader','M','1990-01-01','berrouachedi@gmail.com','1990-01-01','9 rue pierre legrande',75000,'FRANCE','PARIS','prof'),(10,'Akdag','Herman','M','1990-01-01','akdag@gmail.com','1990-01-01','9 rue de ST etienne',92000,'FRANCE','PUTEAUX','prof'),(11,'Mehhadi','Ilyes','M','1990-01-01','mehhadi@gmail.com','1990-01-01','9 rue de lyon',75000,'FRANCE','PARIS','prof'),(12,'Ammi','Mehdi','M','1990-01-01','ammi@gmail.com','1990-01-01','9 rue pierre legrand',75000,'FRANCE','PARIS','prof');
 /*!40000 ALTER TABLE `professeur` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -323,4 +323,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-10 15:06:11
+-- Dump completed on 2020-11-10 21:06:27
